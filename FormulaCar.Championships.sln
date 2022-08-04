@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaCar.Championships.Crawler", "FormulaCar.Championships.Crawler\FormulaCar.Championships.Crawler.csproj", "{A5FEB038-B748-442E-91F9-6F7E9C955C94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaCar.Championships.TestConsole", "FormulaCar.Championships.TestConsole\FormulaCar.Championships.TestConsole.csproj", "{D7D78347-4913-428E-8195-1CA359D05294}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5FEB038-B748-442E-91F9-6F7E9C955C94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5FEB038-B748-442E-91F9-6F7E9C955C94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5FEB038-B748-442E-91F9-6F7E9C955C94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5FEB038-B748-442E-91F9-6F7E9C955C94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7D78347-4913-428E-8195-1CA359D05294}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7D78347-4913-428E-8195-1CA359D05294}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7D78347-4913-428E-8195-1CA359D05294}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7D78347-4913-428E-8195-1CA359D05294}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A22DF91-A049-44CE-9EA7-3DD9D2EF7D0A}
+	EndGlobalSection
+EndGlobal
