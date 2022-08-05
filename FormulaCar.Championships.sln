@@ -3,9 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaCar.Championships.Crawler", "FormulaCar.Championships.Crawler\FormulaCar.Championships.Crawler.csproj", "{A5FEB038-B748-442E-91F9-6F7E9C955C94}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{0AFB5D21-61A2-4E43-AA4E-B408F48BEDB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaCar.Championships.TestConsole", "FormulaCar.Championships.TestConsole\FormulaCar.Championships.TestConsole.csproj", "{D7D78347-4913-428E-8195-1CA359D05294}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{C47D0DE7-1174-4AEA-977F-F395DC525F61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaCar.Championships.Domain", "FormulaCar.Championships.Domain\FormulaCar.Championships.Domain.csproj", "{7C705056-7C6F-44E6-9FAE-2B8D97486A77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaCar.Championships.Service", "FormulaCar.Championships.Service\FormulaCar.Championships.Service.csproj", "{3203E178-D82E-4DE7-9159-84A82F4C09FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaCar.Championships.Service.Abstraction", "FormulaCar.Championships.Service.Abstraction\FormulaCar.Championships.Service.Abstraction.csproj", "{CE7AC8CD-3A43-4445-BED5-E664FF473BDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaCar.Championships.Persistence", "FormulaCar.Championships.Persistence\FormulaCar.Championships.Persistence.csproj", "{151AC8F9-DDB4-41E6-B7C2-EECF13E3F609}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{DFEC6226-03B9-4638-B2C1-803FC322662B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A7B1769B-C511-4939-A72F-72B34F3D2222}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{42244D6C-121B-4F76-B1B4-EA653C008E55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationConsole", "MigrationConsole\MigrationConsole.csproj", "{36829791-FE0F-4A18-9062-1340C700344C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,17 +29,41 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A5FEB038-B748-442E-91F9-6F7E9C955C94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A5FEB038-B748-442E-91F9-6F7E9C955C94}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A5FEB038-B748-442E-91F9-6F7E9C955C94}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A5FEB038-B748-442E-91F9-6F7E9C955C94}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7D78347-4913-428E-8195-1CA359D05294}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7D78347-4913-428E-8195-1CA359D05294}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7D78347-4913-428E-8195-1CA359D05294}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7D78347-4913-428E-8195-1CA359D05294}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C705056-7C6F-44E6-9FAE-2B8D97486A77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C705056-7C6F-44E6-9FAE-2B8D97486A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C705056-7C6F-44E6-9FAE-2B8D97486A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C705056-7C6F-44E6-9FAE-2B8D97486A77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3203E178-D82E-4DE7-9159-84A82F4C09FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3203E178-D82E-4DE7-9159-84A82F4C09FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3203E178-D82E-4DE7-9159-84A82F4C09FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3203E178-D82E-4DE7-9159-84A82F4C09FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE7AC8CD-3A43-4445-BED5-E664FF473BDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE7AC8CD-3A43-4445-BED5-E664FF473BDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE7AC8CD-3A43-4445-BED5-E664FF473BDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE7AC8CD-3A43-4445-BED5-E664FF473BDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{151AC8F9-DDB4-41E6-B7C2-EECF13E3F609}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{151AC8F9-DDB4-41E6-B7C2-EECF13E3F609}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{151AC8F9-DDB4-41E6-B7C2-EECF13E3F609}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{151AC8F9-DDB4-41E6-B7C2-EECF13E3F609}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42244D6C-121B-4F76-B1B4-EA653C008E55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42244D6C-121B-4F76-B1B4-EA653C008E55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42244D6C-121B-4F76-B1B4-EA653C008E55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42244D6C-121B-4F76-B1B4-EA653C008E55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36829791-FE0F-4A18-9062-1340C700344C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36829791-FE0F-4A18-9062-1340C700344C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36829791-FE0F-4A18-9062-1340C700344C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36829791-FE0F-4A18-9062-1340C700344C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7C705056-7C6F-44E6-9FAE-2B8D97486A77} = {0AFB5D21-61A2-4E43-AA4E-B408F48BEDB4}
+		{3203E178-D82E-4DE7-9159-84A82F4C09FE} = {0AFB5D21-61A2-4E43-AA4E-B408F48BEDB4}
+		{CE7AC8CD-3A43-4445-BED5-E664FF473BDB} = {0AFB5D21-61A2-4E43-AA4E-B408F48BEDB4}
+		{151AC8F9-DDB4-41E6-B7C2-EECF13E3F609} = {C47D0DE7-1174-4AEA-977F-F395DC525F61}
+		{42244D6C-121B-4F76-B1B4-EA653C008E55} = {DFEC6226-03B9-4638-B2C1-803FC322662B}
+		{36829791-FE0F-4A18-9062-1340C700344C} = {DFEC6226-03B9-4638-B2C1-803FC322662B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7A22DF91-A049-44CE-9EA7-3DD9D2EF7D0A}

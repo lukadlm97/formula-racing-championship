@@ -1,5 +1,4 @@
-﻿
-using System.Text;
+﻿using System.Text;
 using HtmlAgilityPack;
 
 HttpClient client = new HttpClient();
@@ -18,14 +17,14 @@ if (response.IsSuccessStatusCode)
 HtmlDocument doc = new HtmlDocument();
 doc.LoadHtml(responseContent);
 
-var nodes = doc.DocumentNode.Descendants("table").Where(x => x.Attributes["class"].Value== "sticky-enabled").ToList();
+var nodes = doc.DocumentNode.Descendants("table").Where(x => x.Attributes["class"].Value == "sticky-enabled").ToList();
 
 StringBuilder stringBuilder = new StringBuilder();
 foreach (var htmlNode in nodes)
 {
     var tableType = htmlNode.Descendants("th").Where(x => x.Attributes["class"].Value == "table-head").SingleOrDefault();
     Console.WriteLine(tableType.InnerHtml);
-    
+
     if (tableType.InnerHtml.ToLower() == "RACE - BEST SECTOR TIMES".ToLower() ||
         tableType.InnerHtml.ToLower() == "RACE - PIT STOP - SUMMARY".ToLower() ||
         tableType.InnerHtml.ToLower() == "QUALIFYING - BEST SECTOR TIMES".ToLower() ||
@@ -59,7 +58,7 @@ foreach (var htmlNode in nodes)
         Console.WriteLine();
 
     }
-    stringBuilder.Append("=================================================================================="); 
+    stringBuilder.Append("==================================================================================");
     stringBuilder.AppendLine();
 
 }
@@ -71,22 +70,3 @@ await File.WriteAllTextAsync("hungary-qualifying-22", stringBuilder.ToString());
 Console.WriteLine("press any key to close...");
 
 Console.ReadLine();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
