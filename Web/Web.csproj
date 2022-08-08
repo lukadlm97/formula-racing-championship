@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FormulaCar.Championships.Persistence\FormulaCar.Championships.Persistence.csproj" />
+    <ProjectReference Include="..\FormulaCar.Championships.Presentation\FormulaCar.Championships.Presentation.csproj" />
+    <ProjectReference Include="..\FormulaCar.Championships.Service\FormulaCar.Championships.Service.csproj" />
+  </ItemGroup>
+
+</Project>

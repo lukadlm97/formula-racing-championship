@@ -18,7 +18,11 @@ public sealed class RepositoryDbContext : DbContext
     public DbSet<Season> Seasons { get; set; }
     public DbSet<Raceweek> Raceweeks { get; set; }
     public DbSet<RaceClassification> RaceClassifications { get; set; }
-  //  public DbSet<Raceweek> Raceweeks { get; set; }
+    public DbSet<RaceSectorTime> RaceSectorTimes { get; set; }
+    public DbSet<RacePitStop> RacePitStops { get; set; }
+    public DbSet<RaceSpeedTrap> RaceSpeedTraps { get; set; }
+    public DbSet<RaceFastesLap> RaeFastesLaps { get; set; }
+    public DbSet<RaceMaximumSpeed> RaceMaximumSpeeds { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

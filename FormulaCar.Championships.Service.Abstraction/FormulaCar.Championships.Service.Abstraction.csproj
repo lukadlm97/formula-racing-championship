@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FormulaCar.Championships.Contracts\FormulaCar.Championships.Contracts.csproj" />
+    <ProjectReference Include="..\FormulaCar.Championships.Domain\FormulaCar.Championships.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

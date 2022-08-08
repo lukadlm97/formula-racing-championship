@@ -7,21 +7,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{0AFB5D21-6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{C47D0DE7-1174-4AEA-977F-F395DC525F61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaCar.Championships.Domain", "FormulaCar.Championships.Domain\FormulaCar.Championships.Domain.csproj", "{7C705056-7C6F-44E6-9FAE-2B8D97486A77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FormulaCar.Championships.Domain", "FormulaCar.Championships.Domain\FormulaCar.Championships.Domain.csproj", "{7C705056-7C6F-44E6-9FAE-2B8D97486A77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaCar.Championships.Service", "FormulaCar.Championships.Service\FormulaCar.Championships.Service.csproj", "{3203E178-D82E-4DE7-9159-84A82F4C09FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FormulaCar.Championships.Service", "FormulaCar.Championships.Service\FormulaCar.Championships.Service.csproj", "{3203E178-D82E-4DE7-9159-84A82F4C09FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaCar.Championships.Service.Abstraction", "FormulaCar.Championships.Service.Abstraction\FormulaCar.Championships.Service.Abstraction.csproj", "{CE7AC8CD-3A43-4445-BED5-E664FF473BDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FormulaCar.Championships.Service.Abstraction", "FormulaCar.Championships.Service.Abstraction\FormulaCar.Championships.Service.Abstraction.csproj", "{CE7AC8CD-3A43-4445-BED5-E664FF473BDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaCar.Championships.Persistence", "FormulaCar.Championships.Persistence\FormulaCar.Championships.Persistence.csproj", "{151AC8F9-DDB4-41E6-B7C2-EECF13E3F609}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FormulaCar.Championships.Persistence", "FormulaCar.Championships.Persistence\FormulaCar.Championships.Persistence.csproj", "{151AC8F9-DDB4-41E6-B7C2-EECF13E3F609}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{DFEC6226-03B9-4638-B2C1-803FC322662B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A7B1769B-C511-4939-A72F-72B34F3D2222}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{42244D6C-121B-4F76-B1B4-EA653C008E55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsole", "TestConsole\TestConsole.csproj", "{42244D6C-121B-4F76-B1B4-EA653C008E55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationConsole", "MigrationConsole\MigrationConsole.csproj", "{36829791-FE0F-4A18-9062-1340C700344C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MigrationConsole", "MigrationConsole\MigrationConsole.csproj", "{36829791-FE0F-4A18-9062-1340C700344C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaCar.Championships.Contracts", "FormulaCar.Championships.Contracts\FormulaCar.Championships.Contracts.csproj", "{C792902D-3617-4158-9D08-4F7D9CBE44A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaCar.Championships.Presentation", "FormulaCar.Championships.Presentation\FormulaCar.Championships.Presentation.csproj", "{4A4911B9-C38F-4C70-954F-836724896F1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{42EC849F-4201-4C93-B5F5-37B953C7D235}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +59,18 @@ Global
 		{36829791-FE0F-4A18-9062-1340C700344C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36829791-FE0F-4A18-9062-1340C700344C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36829791-FE0F-4A18-9062-1340C700344C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C792902D-3617-4158-9D08-4F7D9CBE44A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C792902D-3617-4158-9D08-4F7D9CBE44A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C792902D-3617-4158-9D08-4F7D9CBE44A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C792902D-3617-4158-9D08-4F7D9CBE44A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A4911B9-C38F-4C70-954F-836724896F1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A4911B9-C38F-4C70-954F-836724896F1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A4911B9-C38F-4C70-954F-836724896F1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A4911B9-C38F-4C70-954F-836724896F1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42EC849F-4201-4C93-B5F5-37B953C7D235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42EC849F-4201-4C93-B5F5-37B953C7D235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42EC849F-4201-4C93-B5F5-37B953C7D235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42EC849F-4201-4C93-B5F5-37B953C7D235}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +82,8 @@ Global
 		{151AC8F9-DDB4-41E6-B7C2-EECF13E3F609} = {C47D0DE7-1174-4AEA-977F-F395DC525F61}
 		{42244D6C-121B-4F76-B1B4-EA653C008E55} = {DFEC6226-03B9-4638-B2C1-803FC322662B}
 		{36829791-FE0F-4A18-9062-1340C700344C} = {DFEC6226-03B9-4638-B2C1-803FC322662B}
+		{C792902D-3617-4158-9D08-4F7D9CBE44A6} = {0AFB5D21-61A2-4E43-AA4E-B408F48BEDB4}
+		{4A4911B9-C38F-4C70-954F-836724896F1F} = {C47D0DE7-1174-4AEA-977F-F395DC525F61}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7A22DF91-A049-44CE-9EA7-3DD9D2EF7D0A}
