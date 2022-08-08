@@ -13,5 +13,6 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
         builder.Property(booking => booking.Id).ValueGeneratedOnAdd();
        // builder.HasOne(booking => booking.Constructor).WithMany().HasForeignKey(booking=>booking.ConstructorId);
        // builder.HasOne(booking => booking.Driver).WithMany().HasForeignKey(booking => booking.DriverId);
+       builder.HasMany(booking => booking.Results).WithOne().HasForeignKey(result => result.BookingId);
     }
 }

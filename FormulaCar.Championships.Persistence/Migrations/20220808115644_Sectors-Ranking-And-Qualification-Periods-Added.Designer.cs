@@ -4,6 +4,7 @@ using FormulaCar.Championships.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FormulaCar.Championships.Persistence.Migrations
 {
     [DbContext(typeof(RepositoryDbContext))]
-    partial class RepositoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220808115644_Sectors-Ranking-And-Qualification-Periods-Added")]
+    partial class SectorsRankingAndQualificationPeriodsAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -291,34 +293,6 @@ namespace FormulaCar.Championships.Persistence.Migrations
                     b.ToTable("Raceweeks", (string)null);
                 });
 
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Result", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("BookingId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PositionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RaceweekId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookingId");
-
-                    b.HasIndex("PositionId");
-
-                    b.HasIndex("RaceweekId");
-
-                    b.ToTable("Result", (string)null);
-                });
-
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Season", b =>
                 {
                     b.Property<int>("Id")
@@ -356,94 +330,6 @@ namespace FormulaCar.Championships.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sectors", (string)null);
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.RaceClassification", b =>
-                {
-                    b.HasBaseType("FormulaCar.Championships.Domain.Entities.Result");
-
-                    b.Property<int>("Laps")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("Time")
-                        .HasColumnType("time");
-
-                    b.ToTable("RaceClassifications", (string)null);
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.RaceFastesLap", b =>
-                {
-                    b.HasBaseType("FormulaCar.Championships.Domain.Entities.Result");
-
-                    b.Property<double>("AvgSpeed")
-                        .HasColumnType("float");
-
-                    b.Property<TimeSpan>("Gap")
-                        .HasColumnType("time");
-
-                    b.Property<int>("Lap")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("LapTime")
-                        .HasColumnType("time");
-
-                    b.Property<DateTime>("RegistrationTime")
-                        .HasColumnType("datetime2");
-
-                    b.ToTable("RaceFastesLaps", (string)null);
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.RaceMaximumSpeed", b =>
-                {
-                    b.HasBaseType("FormulaCar.Championships.Domain.Entities.Result");
-
-                    b.Property<int>("MaxAvgSpeed")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SectorId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("SectorId");
-
-                    b.ToTable("RaceMaximumSpeeds", (string)null);
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.RacePitStop", b =>
-                {
-                    b.HasBaseType("FormulaCar.Championships.Domain.Entities.Result");
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("TotalTime")
-                        .HasColumnType("time");
-
-                    b.ToTable("RacePitStops", (string)null);
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.RaceSectorTime", b =>
-                {
-                    b.HasBaseType("FormulaCar.Championships.Domain.Entities.Result");
-
-                    b.Property<int>("SectorId")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("Time")
-                        .HasColumnType("time");
-
-                    b.HasIndex("SectorId");
-
-                    b.ToTable("RaceSectorTimes", (string)null);
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.RaceSpeedTrap", b =>
-                {
-                    b.HasBaseType("FormulaCar.Championships.Domain.Entities.Result");
-
-                    b.Property<double>("MaxSpeed")
-                        .HasColumnType("float");
-
-                    b.ToTable("RaceSpeedTraps", (string)null);
                 });
 
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Booking", b =>
@@ -538,104 +424,6 @@ namespace FormulaCar.Championships.Persistence.Migrations
                     b.Navigation("Circuite");
                 });
 
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Result", b =>
-                {
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Booking", null)
-                        .WithMany("Results")
-                        .HasForeignKey("BookingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Position", "Position")
-                        .WithMany()
-                        .HasForeignKey("PositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Raceweek", null)
-                        .WithMany("Results")
-                        .HasForeignKey("RaceweekId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Position");
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.RaceClassification", b =>
-                {
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Result", null)
-                        .WithOne()
-                        .HasForeignKey("FormulaCar.Championships.Domain.Entities.RaceClassification", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.RaceFastesLap", b =>
-                {
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Result", null)
-                        .WithOne()
-                        .HasForeignKey("FormulaCar.Championships.Domain.Entities.RaceFastesLap", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.RaceMaximumSpeed", b =>
-                {
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Result", null)
-                        .WithOne()
-                        .HasForeignKey("FormulaCar.Championships.Domain.Entities.RaceMaximumSpeed", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Sector", "Sector")
-                        .WithMany()
-                        .HasForeignKey("SectorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Sector");
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.RacePitStop", b =>
-                {
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Result", null)
-                        .WithOne()
-                        .HasForeignKey("FormulaCar.Championships.Domain.Entities.RacePitStop", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.RaceSectorTime", b =>
-                {
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Result", null)
-                        .WithOne()
-                        .HasForeignKey("FormulaCar.Championships.Domain.Entities.RaceSectorTime", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Sector", "Sector")
-                        .WithMany()
-                        .HasForeignKey("SectorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Sector");
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.RaceSpeedTrap", b =>
-                {
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Result", null)
-                        .WithOne()
-                        .HasForeignKey("FormulaCar.Championships.Domain.Entities.RaceSpeedTrap", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Booking", b =>
-                {
-                    b.Navigation("Results");
-                });
-
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Constructor", b =>
                 {
                     b.Navigation("Bookings");
@@ -653,11 +441,6 @@ namespace FormulaCar.Championships.Persistence.Migrations
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Driver", b =>
                 {
                     b.Navigation("Bookings");
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Raceweek", b =>
-                {
-                    b.Navigation("Results");
                 });
 
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Season", b =>

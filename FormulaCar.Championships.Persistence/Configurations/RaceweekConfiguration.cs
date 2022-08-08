@@ -17,6 +17,7 @@ namespace FormulaCar.Championships.Persistence.Configurations
             builder.HasKey(raceweek => raceweek.Id);
             builder.Property(raceweek => raceweek.Id).ValueGeneratedOnAdd();
             builder.HasOne(raceweek => raceweek.Circuite);
+            builder.HasMany(raceweek => raceweek.Results).WithOne().HasForeignKey(result => result.RaceweekId);
         }
     }
 }

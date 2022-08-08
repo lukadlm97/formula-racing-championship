@@ -17,6 +17,8 @@ public sealed class RepositoryDbContext : DbContext
     public DbSet<Booking> Bookings { get; set; }
     public DbSet<Season> Seasons { get; set; }
     public DbSet<Raceweek> Raceweeks { get; set; }
+    public DbSet<RaceClassification> RaceClassifications { get; set; }
+  //  public DbSet<Raceweek> Raceweeks { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
