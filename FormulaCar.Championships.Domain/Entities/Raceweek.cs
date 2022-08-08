@@ -12,8 +12,6 @@ namespace FormulaCar.Championships.Domain.Entities
         public int OrderNumber { get; set; }
         public bool IsContainsSprintQualification  { get; set; }
         public Circuite Circuite { get; set; }
-        public int CircuiteId { get; set; }
-        public Season Season { get; set; }
         public int SeasonId { get; set; }
     }
 }

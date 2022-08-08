@@ -18,6 +18,15 @@ namespace FormulaCar.Championships.Persistence.Configurations
             builder.Property(country => country.Id).ValueGeneratedOnAdd();
             builder.Property(country => country.Name).HasMaxLength(250);
             builder.HasOne(country => country.MediaTag);
+            builder.HasMany(country => country.Drivers)
+                .WithOne()
+                .HasForeignKey(driver => driver.CountryId);
+            builder.HasMany(country => country.Constructors)
+                .WithOne()
+                .HasForeignKey(constructor => constructor.CountryId);
+            builder.HasMany(country => country.Circuites)
+                .WithOne()
+                .HasForeignKey(circuite => circuite.CountryId);
         }
     }
 }

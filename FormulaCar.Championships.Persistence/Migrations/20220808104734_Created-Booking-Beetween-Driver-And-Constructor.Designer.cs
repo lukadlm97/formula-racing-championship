@@ -4,6 +4,7 @@ using FormulaCar.Championships.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FormulaCar.Championships.Persistence.Migrations
 {
     [DbContext(typeof(RepositoryDbContext))]
-    partial class RepositoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220808104734_Created-Booking-Beetween-Driver-And-Constructor")]
+    partial class CreatedBookingBeetweenDriverAndConstructor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +47,6 @@ namespace FormulaCar.Championships.Persistence.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("SeasonId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
 
@@ -56,8 +55,6 @@ namespace FormulaCar.Championships.Persistence.Migrations
                     b.HasIndex("ConstructorId");
 
                     b.HasIndex("DriverId");
-
-                    b.HasIndex("SeasonId");
 
                     b.ToTable("Bookings", (string)null);
                 });
@@ -221,54 +218,6 @@ namespace FormulaCar.Championships.Persistence.Migrations
                     b.ToTable("MediaTags", (string)null);
                 });
 
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Raceweek", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CircuiteId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsContainsSprintQualification")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("OrderNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SeasonId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CircuiteId");
-
-                    b.HasIndex("SeasonId");
-
-                    b.ToTable("Raceweeks", (string)null);
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Season", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("RaceNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Seasons", (string)null);
-                });
-
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Booking", b =>
                 {
                     b.HasOne("FormulaCar.Championships.Domain.Entities.Constructor", null)
@@ -280,12 +229,6 @@ namespace FormulaCar.Championships.Persistence.Migrations
                     b.HasOne("FormulaCar.Championships.Domain.Entities.Driver", null)
                         .WithMany("Bookings")
                         .HasForeignKey("DriverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Season", null)
-                        .WithMany("Bookings")
-                        .HasForeignKey("SeasonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -344,23 +287,6 @@ namespace FormulaCar.Championships.Persistence.Migrations
                     b.Navigation("MediaTag");
                 });
 
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Raceweek", b =>
-                {
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Circuite", "Circuite")
-                        .WithMany()
-                        .HasForeignKey("CircuiteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Season", null)
-                        .WithMany("Raceweeks")
-                        .HasForeignKey("SeasonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Circuite");
-                });
-
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Constructor", b =>
                 {
                     b.Navigation("Bookings");
@@ -378,13 +304,6 @@ namespace FormulaCar.Championships.Persistence.Migrations
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Driver", b =>
                 {
                     b.Navigation("Bookings");
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Season", b =>
-                {
-                    b.Navigation("Bookings");
-
-                    b.Navigation("Raceweeks");
                 });
 #pragma warning restore 612, 618
         }

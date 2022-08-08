@@ -6,4 +6,7 @@ public class Country
     public string Name { get; set; }
     public string Code { get; set; }
     public MediaTag? MediaTag { get; set; }
+    public ICollection<Driver> Drivers { get; set; }
+    public ICollection<Constructor> Constructors { get; set; }
+    public ICollection<Circuite> Circuites{ get; set; }
 }

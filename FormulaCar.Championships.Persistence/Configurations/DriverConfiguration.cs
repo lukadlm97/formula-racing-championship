@@ -18,7 +18,8 @@ namespace FormulaCar.Championships.Persistence.Configurations
             builder.Property(driver => driver.Id).ValueGeneratedOnAdd();
             builder.Property(driver => driver.FirstName).HasMaxLength(250);
             builder.Property(driver => driver.LastName).HasMaxLength(250);
-            builder.HasOne(country => country.MediaTag);
+            builder.HasOne(driver => driver.MediaTag);
+            builder.HasMany(driver => driver.Bookings).WithOne().HasForeignKey(booking => booking.DriverId);
             /*builder.HasMany(driver => driver.Bookings)
                 .WithOne(booking => booking.Driver)
                 .HasForeignKey(booking => booking.DriverId);*/

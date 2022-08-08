@@ -13,11 +13,10 @@ namespace FormulaCar.Championships.Domain.Entities
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public bool IsActive { get; set; }
+    //    public int SeasonId { get; set; }
+    //    public Season Season { get; set; }
+        public  int DriverId { get; set; }
+        public  int ConstructorId { get; set; }
         public int SeasonId { get; set; }
-        public Season Season { get; set; }
-        public int DriverId { get; set; }
-        public Driver Driver { get; set; }
-        public int ContructorId { get; set; }
-        public Constructor Constructor { get; set; }
     }
 }

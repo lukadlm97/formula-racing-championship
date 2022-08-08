@@ -8,5 +8,6 @@ public class Driver
     public DateTime DateOfBirth { get; set; }
     public bool IsActive { get; set; }
     public MediaTag? MediaTag { get; set; }
-  //  public ICollection<Booking> Bookings { get; set; }
+    public int CountryId { get; set; }
+    public ICollection<Booking> Bookings { get; set; }
 }

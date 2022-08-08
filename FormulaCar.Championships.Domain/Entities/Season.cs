@@ -11,7 +11,7 @@ namespace FormulaCar.Championships.Domain.Entities
         public int Id { get; set; } 
         public int Year { get; set; } 
         public int RaceNumber { get; set; }
-        public IEnumerable<Booking> Bookings { get; set; }
-        public IEnumerable<Raceweek> Raceweeks { get; set; }
+        public ICollection<Booking> Bookings { get; set; }
+        public ICollection<Raceweek> Raceweeks { get; set; }
     }
 }
