@@ -1,9 +1,12 @@
-using FormulaCar.Championships.Domain.Repositories;
+﻿using FormulaCar.Championships.Domain.Repositories;
 using FormulaCar.Championships.Persistence;
 using FormulaCar.Championships.Persistence.Repositories;
 using FormulaCar.Championships.Service;
 using FormulaCar.Championships.Service.Abstraction;
+using FormulaCar.Championships.Service.Mappers;
 using Microsoft.EntityFrameworkCore;
+using NLog.Web;
+using Web.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 ConfigureServices(builder.Services,builder.Configuration);
+ConfigureLogging(builder.Logging, builder.Configuration);
+builder.Host.UseNLog();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
@@ -26,7 +31,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.MapControllers();
 
 app.Run();
@@ -48,4 +53,16 @@ void ConfigureServices(IServiceCollection serviceCollection,IConfiguration confi
 
         builder.UseSqlServer(connectionString);
     });
+
+    serviceCollection.AddAutoMapper(typeof(PositionProfile));
+    serviceCollection.AddScoped<ExceptionHandlingMiddleware>();
+
+}
+
+void ConfigureLogging(ILoggingBuilder loggingBuilder, IConfiguration configuration)
+{
+    loggingBuilder.ClearProviders();
+    loggingBuilder.AddConfiguration(configuration.GetSection("Logging"));
+    loggingBuilder.AddConsole();
+    loggingBuilder.AddDebug();
 }

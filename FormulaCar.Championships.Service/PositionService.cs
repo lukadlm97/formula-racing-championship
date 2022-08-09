@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using FormulaCar.Championships.Contracts;
 using FormulaCar.Championships.Domain.Entities;
+using FormulaCar.Championships.Domain.Exceptions;
 using FormulaCar.Championships.Domain.Repositories;
 using FormulaCar.Championships.Service.Abstraction;
 using Mapster;
@@ -14,70 +16,81 @@ namespace FormulaCar.Championships.Service
     public class PositionService:IPositionService
     {
         private readonly IRepositoryManager _repositoryManager;
-        public PositionService(IRepositoryManager repositoryManager)
+        private readonly IMapper _mapper;
+
+        public PositionService(IRepositoryManager repositoryManager,IMapper mapper)
         {
             _repositoryManager = repositoryManager;
+            _mapper = mapper;
         }
 
-        public async Task<PositionDto> Create(PositionForCreationDto positionDto)
+        public async Task<PositionDto> Create(PositionForCreationDto positionDto, CancellationToken cancellationToken = default)
         {
-            var position = positionDto.Adapt<Position>();
+            var position = _mapper.Map<Position>(positionDto);
 
             _repositoryManager.PositionRepository.Insert(position);
-            await _repositoryManager.UnitOfWork.SaveChangesAsync();
+            await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
 
-            return position.Adapt<PositionDto>();
+            return _mapper.Map<PositionDto>(position);
         }
 
-        public async Task<PositionDto> Update(PositionForUpdateDto positionDto)
+        public async Task<PositionDto> Update(PositionForUpdateDto positionDto, CancellationToken cancellationToken = default)
         {
             var position = (await _repositoryManager.PositionRepository.FindByCondition(x => x.Id == positionDto.Id)).FirstOrDefault();
             if (position is null)
             {
-                throw new NullReferenceException(positionDto.Id+" not exist!!!");
+                throw new ItemNotFoundException(positionDto.Id);
             }
 
             position.Rank = positionDto.Name;
 
-            await _repositoryManager.UnitOfWork.SaveChangesAsync();
-            return position.Adapt<PositionDto>();
+            await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
+            return _mapper.Map<PositionDto>(position);
         }
 
-        public async Task<bool> Delete(int positionId)
+        public async Task<bool> Delete(int positionId, CancellationToken cancellationToken = default)
         {
             var position = (await _repositoryManager.PositionRepository.FindByCondition(x => x.Id == positionId)).FirstOrDefault();
             if (position is null)
             {
-                throw new NullReferenceException(positionId + " not exist!!!");
+                throw new ItemNotFoundException(positionId);
             }
 
             _repositoryManager.PositionRepository.Remove(position);
-            await _repositoryManager.UnitOfWork.SaveChangesAsync();
+            await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
 
 
             return true;
         }
 
-        public async Task<IEnumerable<PositionDto>> GetAll()
+        public async Task<IEnumerable<PositionDto>> GetAll(CancellationToken cancellationToken = default)
         {
             var positions = await _repositoryManager.PositionRepository.FindAll();
             if (positions is null)
             {
                 return new List<PositionDto>();
             }
-
-
+            
             var positionsDto = new List<PositionDto>();
             foreach (var position in positions)
             {
-                var newPosition = new PositionDto()
-                {
-                    Id = position.Id,
-                    Name = position.Rank
-                };
+                var newPosition = _mapper.Map<PositionDto>(position);
                 positionsDto.Add(newPosition);
             }
             return positionsDto;
+        }
+
+        public async Task<PositionDto> GetById(int id, CancellationToken cancellationToken = default)
+        {
+            var position = (await _repositoryManager.PositionRepository.FindByCondition(x => x.Id == id)).FirstOrDefault();
+
+            if (position is null)
+            {
+                throw new ItemNotFoundException(id);
+            }
+            
+
+            return _mapper.Map<PositionDto>(position);
         }
     }
 }
