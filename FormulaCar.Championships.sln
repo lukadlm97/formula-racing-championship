@@ -23,11 +23,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsole", "TestConsole\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MigrationConsole", "MigrationConsole\MigrationConsole.csproj", "{36829791-FE0F-4A18-9062-1340C700344C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaCar.Championships.Contracts", "FormulaCar.Championships.Contracts\FormulaCar.Championships.Contracts.csproj", "{C792902D-3617-4158-9D08-4F7D9CBE44A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FormulaCar.Championships.Contracts", "FormulaCar.Championships.Contracts\FormulaCar.Championships.Contracts.csproj", "{C792902D-3617-4158-9D08-4F7D9CBE44A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaCar.Championships.Presentation", "FormulaCar.Championships.Presentation\FormulaCar.Championships.Presentation.csproj", "{4A4911B9-C38F-4C70-954F-836724896F1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FormulaCar.Championships.Presentation", "FormulaCar.Championships.Presentation\FormulaCar.Championships.Presentation.csproj", "{4A4911B9-C38F-4C70-954F-836724896F1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{42EC849F-4201-4C93-B5F5-37B953C7D235}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{42EC849F-4201-4C93-B5F5-37B953C7D235}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaCar.Championships.Importers", "FormulaCar.Championships.Importers\FormulaCar.Championships.Importers.csproj", "{A0E9B65B-561E-4C09-90B1-59BD0DF8D322}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,10 @@ Global
 		{42EC849F-4201-4C93-B5F5-37B953C7D235}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42EC849F-4201-4C93-B5F5-37B953C7D235}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42EC849F-4201-4C93-B5F5-37B953C7D235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0E9B65B-561E-4C09-90B1-59BD0DF8D322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0E9B65B-561E-4C09-90B1-59BD0DF8D322}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0E9B65B-561E-4C09-90B1-59BD0DF8D322}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0E9B65B-561E-4C09-90B1-59BD0DF8D322}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +90,7 @@ Global
 		{36829791-FE0F-4A18-9062-1340C700344C} = {DFEC6226-03B9-4638-B2C1-803FC322662B}
 		{C792902D-3617-4158-9D08-4F7D9CBE44A6} = {0AFB5D21-61A2-4E43-AA4E-B408F48BEDB4}
 		{4A4911B9-C38F-4C70-954F-836724896F1F} = {C47D0DE7-1174-4AEA-977F-F395DC525F61}
+		{A0E9B65B-561E-4C09-90B1-59BD0DF8D322} = {C47D0DE7-1174-4AEA-977F-F395DC525F61}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7A22DF91-A049-44CE-9EA7-3DD9D2EF7D0A}

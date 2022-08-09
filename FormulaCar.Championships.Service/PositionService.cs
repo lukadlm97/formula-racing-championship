@@ -36,7 +36,7 @@ namespace FormulaCar.Championships.Service
 
         public async Task<PositionDto> Update(PositionForUpdateDto positionDto, CancellationToken cancellationToken = default)
         {
-            var position = (await _repositoryManager.PositionRepository.FindByCondition(x => x.Id == positionDto.Id)).FirstOrDefault();
+            var position = (await _repositoryManager.PositionRepository.FindByCondition(x => x.Id == positionDto.Id, cancellationToken)).FirstOrDefault();
             if (position is null)
             {
                 throw new ItemNotFoundException(positionDto.Id);
@@ -50,7 +50,7 @@ namespace FormulaCar.Championships.Service
 
         public async Task<bool> Delete(int positionId, CancellationToken cancellationToken = default)
         {
-            var position = (await _repositoryManager.PositionRepository.FindByCondition(x => x.Id == positionId)).FirstOrDefault();
+            var position = (await _repositoryManager.PositionRepository.FindByCondition(x => x.Id == positionId, cancellationToken)).FirstOrDefault();
             if (position is null)
             {
                 throw new ItemNotFoundException(positionId);
@@ -65,7 +65,7 @@ namespace FormulaCar.Championships.Service
 
         public async Task<IEnumerable<PositionDto>> GetAll(CancellationToken cancellationToken = default)
         {
-            var positions = await _repositoryManager.PositionRepository.FindAll();
+            var positions = await _repositoryManager.PositionRepository.FindAll(cancellationToken);
             if (positions is null)
             {
                 return new List<PositionDto>();
@@ -82,7 +82,7 @@ namespace FormulaCar.Championships.Service
 
         public async Task<PositionDto> GetById(int id, CancellationToken cancellationToken = default)
         {
-            var position = (await _repositoryManager.PositionRepository.FindByCondition(x => x.Id == id)).FirstOrDefault();
+            var position = (await _repositoryManager.PositionRepository.FindByCondition(x => x.Id == id, cancellationToken)).FirstOrDefault();
 
             if (position is null)
             {

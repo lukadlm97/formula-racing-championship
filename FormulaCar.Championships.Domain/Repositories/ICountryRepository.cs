@@ -12,5 +12,7 @@ namespace FormulaCar.Championships.Domain.Repositories
         Task<IEnumerable<Driver>> GetDrivers(int countryId);
         Task<IEnumerable<Constructor>> GetConstructors(int countryId);
         Task<IEnumerable<Circuite>> GetCircuites(int countryId);
+        Task<IEnumerable<Country>> GetAllWithMedia();
+        Task<bool> InsertCountry(Country country,int mediaTagId);
     }
 }
