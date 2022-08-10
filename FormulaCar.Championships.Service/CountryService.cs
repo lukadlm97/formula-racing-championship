@@ -50,5 +50,33 @@ namespace FormulaCar.Championships.Service
 
             return _mapper.Map<CountryDto>(country);
         }
+
+        public async Task<int> GetIdByCode(string code)
+        {
+            var countries = await _repositoryManager.CountryRepository.FindByCondition(x => x.Code == code);
+
+            if (countries == null || countries.Count() != 1)
+            {
+                return -1;
+            }
+
+            var country = countries.FirstOrDefault(x => x.Code == code);
+
+            return country.Id;
+        }
+
+        public async Task<string> GetCodeById(int id)
+        {
+            var countries = await _repositoryManager.CountryRepository.FindByCondition(x => x.Id == id);
+
+            if (countries == null || countries.Count() != 1)
+            {
+                throw new ItemNotFoundException(-1);
+            }
+
+            var country = countries.FirstOrDefault(x => x.Id == id);
+
+            return country.Code;
+        }
     }
 }

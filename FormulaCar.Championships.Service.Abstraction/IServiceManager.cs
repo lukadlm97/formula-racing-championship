@@ -6,4 +6,5 @@ public interface IServiceManager
     ISectorService SectorService { get; }
     IQualificationPeriodsService QualificationPeriodsService { get; }
     ICountryService CountryService { get; }
+    ICircuiteService CircuiteService { get; }
 }

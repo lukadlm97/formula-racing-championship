@@ -9,5 +9,6 @@ namespace FormulaCar.Championships.Domain.Repositories
 {
     public interface ICircuiteRepository:IBaseRepository<Circuite>
     {
+        Task InsertCircuite(Circuite circuite);
     }
 }

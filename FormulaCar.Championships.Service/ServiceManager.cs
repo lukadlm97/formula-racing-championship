@@ -15,6 +15,7 @@ namespace FormulaCar.Championships.Service
         private readonly Lazy<ISectorService> _lazySectorService;
         private readonly Lazy<IQualificationPeriodsService> _lazyQualificationPeriodsService;
         private readonly Lazy<ICountryService> _lazyCountryService;
+        private readonly Lazy<ICircuiteService> _lazyCircuiteService;
         private readonly IMapper _mapper;
 
         public ServiceManager(IRepositoryManager repositoryManager,IMapper mapper)
@@ -24,11 +25,13 @@ namespace FormulaCar.Championships.Service
             _lazySectorService = new Lazy<ISectorService>(() => new SectorService(repositoryManager, _mapper));
             _lazyQualificationPeriodsService = new Lazy<IQualificationPeriodsService>(() => new QualificationPeriodsService(repositoryManager, _mapper));
             _lazyCountryService = new Lazy<ICountryService>(() => new CountryService(repositoryManager, _mapper));
+            _lazyCircuiteService = new Lazy<ICircuiteService>(() => new CircuiteService(repositoryManager, _mapper));
         }
 
         public IPositionService PositionService => _lazyPositionService.Value;
         public ISectorService SectorService => _lazySectorService.Value;
         public IQualificationPeriodsService QualificationPeriodsService => _lazyQualificationPeriodsService.Value;
         public ICountryService CountryService => _lazyCountryService.Value;
+        public ICircuiteService CircuiteService => _lazyCircuiteService.Value;
     }
 }

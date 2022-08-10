@@ -30,19 +30,38 @@ namespace FormulaCar.Championships.Importers.Services
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            /*
-            var countries = await _serviceManager.;
-            if (countries != null && countries.Any())
+            var exisitingCircuites = await _serviceManager.CircuiteService.GetAll();
+            if (exisitingCircuites != null && exisitingCircuites.Any())
             {
-                _logger.LogInformation("Countries exist!!!");
+                _logger.LogInformation("Circuites exist!!!");
                 return;
             }
-            */
-            var circuites = await _circuitFetcher.GetCircuites();
 
+            var circuites = await _circuitFetcher.GetCircuites();
+            var uniqNamesOfCircuites = exisitingCircuites.Select(x => x.Name);
             foreach (var circuitDto in circuites)
             {
-                Console.WriteLine(circuitDto.Name + "     "+circuitDto.City+"     "+"["+circuitDto.CountryCode+"]");
+                if (uniqNamesOfCircuites.Contains(circuitDto.Name))
+                {
+                    _logger.LogWarning(circuitDto.Name+" existing in DB");
+                    continue;
+                }
+
+                var countryId = await _serviceManager.CountryService.GetIdByCode(circuitDto.CountryCode);
+                if (countryId == -1)
+                {
+                    _logger.LogWarning(circuitDto.Name+"["+circuitDto.City+"]"+" not inserted. Could not be found country id for code:"+circuitDto.CountryCode);
+                    continue;
+                }
+                var newCircuit = new CircuitForCreationDto()
+                {
+                    City = circuitDto.City,
+                    CountryId = countryId,
+                    Name = circuitDto.Name
+                };
+
+                var createdCircuit = await _serviceManager.CircuiteService.Create(newCircuit);
+                _logger.LogInformation(createdCircuit.Name+" created circuit with id:"+createdCircuit.CircuitId);
             }
 
             _logger.LogInformation(Enumerable.Repeat("=", 50).ToString());
