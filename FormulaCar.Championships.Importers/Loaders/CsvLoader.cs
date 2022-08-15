@@ -1,20 +1,28 @@
 ﻿using System.Data;
 using FormulaCar.Championships.Domain.Entities;
+using FormulaCar.Championships.Importers.Configurations;
 using FormulaCar.Championships.Importers.Utilities;
 using FormulaCar.Championships.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace FormulaCar.Championships.Importers.Loaders;
 
 public class CsvLoader : ICsvLoader
 {
+    private readonly ImportSettings _importSettings;
+
+    public CsvLoader(IOptions<ImportSettings> options)
+    {
+        _importSettings = options.Value;
+    }
     public IEnumerable<DriverImportFormat> GetDrivers()
     {
         var drivers = new List<DriverImportFormat>();
         try
         {
             var _xl = new Microsoft.Office.Interop.Excel.Application();
-            var wb = _xl.Workbooks.Open(Path.Combine(Environment.CurrentDirectory,"drivers.csv"));
+            var wb = _xl.Workbooks.Open(Path.Combine(Environment.CurrentDirectory, _importSettings.DriversCsv));
             var sheets = wb.Sheets;
             DataSet dataSet = null;
 

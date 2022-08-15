@@ -1,50 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FormulaCar.Championships.Contracts;
-using FormulaCar.Championships.Importers.Configurations;
+﻿using FormulaCar.Championships.Contracts;
 using FormulaCar.Championships.Importers.Loaders;
 using FormulaCar.Championships.Service.Abstraction;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
-namespace FormulaCar.Championships.Importers.Services
+namespace FormulaCar.Championships.Importers.Services;
+
+public class DriverImporter : BackgroundService
 {
-    public class DriverImporter:BackgroundService
+    private readonly ICsvLoader _csvLoader;
+    private readonly ILogger<CountryImporter> _logger;
+    private readonly IServiceManager _serviceManager;
+
+    public DriverImporter(IServiceManager serviceManager, ICsvLoader csvLoader, ILogger<CountryImporter> logger)
     {
-        private readonly IServiceManager _serviceManager;
-        private readonly ICsvLoader _csvLoader;
-        private readonly ILogger<CountryImporter> _logger;
-
-        public DriverImporter(IServiceManager serviceManager, ICsvLoader csvLoader,ILogger<CountryImporter> logger)
-        {
-            _serviceManager = serviceManager;
-            _csvLoader = csvLoader;
-            _logger = logger;
-        }
+        _serviceManager = serviceManager;
+        _csvLoader = csvLoader;
+        _logger = logger;
+    }
 
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        _logger.LogInformation("import drivers started!!!");
+        
+        var newDrivers = _csvLoader.GetDrivers();
 
-            _logger.LogInformation("import drivers started!!!");
-            var drivers = await _serviceManager.DriverService.GetDrivers();
-            if (drivers != null && drivers.Any())
+        _logger.LogInformation("loaded " + newDrivers.Count() + " drivers");
+
+        foreach (var driverImportFormat in newDrivers)
+            if (!await _serviceManager.DriverService.Exist(driverImportFormat.FirstName,
+                    driverImportFormat.LastName))
             {
-                _logger.LogInformation("Countries exist!!!");
-                return;
-            }
-
-            var newDrivers =  _csvLoader.GetDrivers();
-
-            _logger.LogInformation("loaded "+newDrivers.Count()+" drivers");
-
-            foreach (var driverImportFormat in newDrivers)
-            {
-                var insertDriver = new DriverForCreationDto()
+                var insertDriver = new DriverForCreationDto
                 {
                     DateOfBirth = driverImportFormat.DateOfBirth,
                     FirstName = driverImportFormat.FirstName,
@@ -52,24 +40,27 @@ namespace FormulaCar.Championships.Importers.Services
                     Nationality = driverImportFormat.Country.Name,
                     IsActive = driverImportFormat.IsActive
                 };
-               var newDriver = await _serviceManager.DriverService.Create(insertDriver);
-               if (newDriver != null)
-               {
-                   var report = newDriver.DriverId + ". " + newDriver.FirstName + " " + newDriver.LastName + " [" +
-                                newDriver.Country + "]";
-                   Console.WriteLine(report);
-                   _logger.LogInformation(report);
+                var newDriver = await _serviceManager.DriverService.Create(insertDriver);
+                if (newDriver != null)
+                {
+                    var report = newDriver.DriverId + ". " + newDriver.FirstName + " " + newDriver.LastName + " [" +
+                                 newDriver.Country + "]";
+                    Console.WriteLine(report);
+                    _logger.LogInformation(report);
                 }
-               else
-               {
+                else
+                {
+                    _logger.LogInformation("Not imported: " + insertDriver.FirstName + " " + insertDriver.LastName +
+                                           " [" + insertDriver.Nationality + "]");
+                }
+            }
+            else
+            {
 
-                   _logger.LogInformation("Not imported: "+insertDriver.FirstName+" "+insertDriver.LastName+" ["+insertDriver.Nationality+"]");
-                }
-             
+                _logger.LogInformation("driver exist: "+ driverImportFormat.FirstName+" "+
+                    driverImportFormat.LastName);
             }
 
-            _logger.LogInformation("import drivers ended!!!");
-
-        }
+        _logger.LogInformation("import drivers ended!!!");
     }
 }

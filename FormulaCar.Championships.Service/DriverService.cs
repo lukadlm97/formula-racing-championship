@@ -61,8 +61,11 @@ namespace FormulaCar.Championships.Service
             return createdDriver;
         }
 
+        public async Task<bool> Exist(string firstName, string lastName)
+        {
+            return _repositoryManager.DriverRepository.Exist(firstName, lastName);
+        }
 
-       
 
         private Country GetOrigin(string nationality, IEnumerable<Country> countries)
         {

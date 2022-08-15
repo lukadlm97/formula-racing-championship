@@ -11,6 +11,7 @@ namespace FormulaCar.Championships.Importers.Configurations
     {
         public string CountrySourceFilePath { get; set; }
         public string CircuiteSourceUrl { get; set; }
+        public string DriversCsv { get; set; }
         
     }
 }
