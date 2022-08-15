@@ -7,4 +7,5 @@ public interface IServiceManager
     IQualificationPeriodsService QualificationPeriodsService { get; }
     ICountryService CountryService { get; }
     ICircuiteService CircuiteService { get; }
+    IDriverService DriverService { get; }
 }

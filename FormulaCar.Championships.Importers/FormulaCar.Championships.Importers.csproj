@@ -14,7 +14,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FormulaCar.Championships.Persistence\FormulaCar.Championships.Persistence.csproj" />
     <ProjectReference Include="..\FormulaCar.Championships.Service.Abstraction\FormulaCar.Championships.Service.Abstraction.csproj" />
   </ItemGroup>
+
+
+	<ItemGroup>
+		<Reference Include="Microsoft.Office.Interop.Excel">
+			<HintPath>..\..\..\..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Office.Interop.Excel\15.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Excel.dll</HintPath>
+			<Private>true</Private>
+			<EmbedInteropTypes>true</EmbedInteropTypes>
+		</Reference>
+	</ItemGroup>
+	
 
 </Project>
