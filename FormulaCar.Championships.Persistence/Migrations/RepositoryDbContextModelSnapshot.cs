@@ -111,6 +111,10 @@ namespace FormulaCar.Championships.Persistence.Migrations
                     b.Property<int>("CountryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Engine")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("FirstApperance")
                         .HasColumnType("datetime2");
 

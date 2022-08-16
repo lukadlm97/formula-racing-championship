@@ -13,12 +13,13 @@ public abstract class RepositoryBase<T> : IBaseRepository<T> where T : class
 
     protected RepositoryDbContext RepositoryContext { get; set; }
 
-    public async Task<IQueryable<T>> FindAll(CancellationToken cancellationToken=default)
+    public async Task<IQueryable<T>> FindAll(CancellationToken cancellationToken = default)
     {
         return RepositoryContext.Set<T>().AsNoTracking();
     }
 
-    public async Task<IQueryable<T>> FindByCondition(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
+    public async Task<IQueryable<T>> FindByCondition(Expression<Func<T, bool>> expression,
+        CancellationToken cancellationToken = default)
     {
         return RepositoryContext.Set<T>()
             .Where(expression).AsNoTracking();

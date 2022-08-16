@@ -9,8 +9,9 @@ public class DriverImportFormat
     public DateTime DateOfBirth { get; set; }
     public bool IsActive { get; set; } = false;
     public Country Country { get; set; }
+
     public override string ToString()
     {
-        return FirstName+" "+LastName+" ["+Country.Name+"]"+"   ("+IsActive+")";
+        return FirstName + " " + LastName + " [" + Country.Name + "]" + "   (" + IsActive + ")";
     }
 }

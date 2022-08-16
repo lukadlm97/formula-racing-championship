@@ -43,17 +43,18 @@ static IHostBuilder CreateHostBuilder(string[] args)
             });
 
             services.AddAutoMapper(typeof(PositionProfile));
-            services.AddScoped<IRepositoryManager, RepositoryManager>();
-            services.AddScoped<IServiceManager, ServiceManager>();
-            services.AddScoped<ICsvLoader, CsvLoader>();
-            services.AddScoped<IJsonLoader, JsonLoader>();
+            services.AddSingleton<IRepositoryManager, RepositoryManager>();
+            services.AddSingleton<IServiceManager, ServiceManager>();
+            services.AddSingleton<ICsvLoader, CsvLoader>();
+            services.AddSingleton<IJsonLoader, JsonLoader>();
+            services.AddSingleton<IConstructorFetcher, ConstructorFetcher>();
             var importConfig = configuration.GetSection("ImporterConfiguration");
             services.Configure<ImportSettings>(importConfig);
             services.AddHttpClient<ICircuitFetcher, CircuiteFetcher>(client =>
             {
                 client.BaseAddress = new Uri(configuration["ImporterConfiguration:CircuiteSourceUrl"]);
             });
-            services.AddHostedService<DriverImporter>();
+            services.AddHostedService<ConstructorImporter>();
         }).ConfigureLogging(loggingBuilder =>
         {
             var configuration = new ConfigurationBuilder()

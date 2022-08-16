@@ -10,7 +10,7 @@ public class JsonLoader : IJsonLoader
     {
         var countryDtos = new List<CountryDto>();
         var phisicalPath = Path.Combine(Environment.CurrentDirectory, jsonPath);
-        using (StreamReader streamReader = new StreamReader(phisicalPath))
+        using (var streamReader = new StreamReader(phisicalPath))
         {
             var countriesJson = streamReader.ReadToEnd();
             var list = JsonSerializer.Deserialize<List<CountryImportFormat>>(countriesJson);
@@ -23,9 +23,8 @@ public class JsonLoader : IJsonLoader
                 };
                 countryDtos.Add(newCountry);
             }
-
         }
-      
+
         return countryDtos;
     }
 }

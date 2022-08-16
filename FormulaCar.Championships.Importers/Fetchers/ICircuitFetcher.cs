@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FormulaCar.Championships.Contracts;
+﻿using FormulaCar.Championships.Contracts;
 
-namespace FormulaCar.Championships.Importers.Fetchers
+namespace FormulaCar.Championships.Importers.Fetchers;
+
+public interface ICircuitFetcher
 {
-    public interface ICircuitFetcher
-    {
-        Task<IEnumerable<CircuitDto>> GetCircuites();
-    }
+    Task<IEnumerable<CircuitDto>> GetCircuites();
 }

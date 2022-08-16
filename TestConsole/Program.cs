@@ -74,6 +74,10 @@ Console.WriteLine("press any key to close...");
 Console.ReadLine();
 
 */
+
+
+//TODO circuits import
+/*
 HttpClient client = new HttpClient();
 
 
@@ -143,6 +147,47 @@ foreach (var htmlNode in nodes)
     Console.WriteLine(htmlNode.ToString());
 }
 */
+HttpClient client = new HttpClient();
+
+
+var response = await client.GetAsync($"https://en.wikipedia.org/wiki/List_of_Formula_One_constructors");
+
+var responseContent = await response.Content.ReadAsStringAsync();
+
+if (response.IsSuccessStatusCode)
+{
+   // Console.WriteLine(responseContent);
+}
+
+HtmlDocument doc = new HtmlDocument();
+doc.LoadHtml(responseContent);
+
+var nodes = doc.DocumentNode.Descendants("table").ToList();
+var constructorNode = nodes[1];
+
+var constructors = constructorNode.Descendants("tr").ToList();
+
+var init = true;
+foreach (var constructor in constructors)
+{
+    if (init)
+    {
+        init = false;
+        continue;
+    }
+    var columns = constructor.Descendants("td").ToArray();
+    var team = columns[0].Descendants("a").FirstOrDefault().InnerHtml;
+    var engin = columns[1].Descendants("a").FirstOrDefault().InnerHtml;
+    var country = columns[2].Descendants("a").FirstOrDefault().InnerHtml;
+    var firstApperance = columns[4].Descendants("a").LastOrDefault().InnerHtml;
+
+    Console.WriteLine(team+" ["+engin+"] "+country+"    "+firstApperance);
+    
+   // Console.WriteLine(constructor.InnerHtml);
+}
+
+
+
 Console.WriteLine("press any key to close...");
 
 Console.ReadLine();

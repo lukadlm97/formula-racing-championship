@@ -12,6 +12,7 @@
     <None Remove="appsettings.json" />
     <None Remove="drivers.csv" />
     <None Remove="newDrivers21.csv" />
+    <None Remove="newDrivers22.csv" />
     <None Remove="NLog.config" />
   </ItemGroup>
 
@@ -20,6 +21,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="newDrivers22.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="newDrivers21.csv">

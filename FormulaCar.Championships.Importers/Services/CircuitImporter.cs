@@ -1,87 +1,83 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FormulaCar.Championships.Contracts;
+﻿using FormulaCar.Championships.Contracts;
 using FormulaCar.Championships.Importers.Configurations;
 using FormulaCar.Championships.Importers.Fetchers;
-using FormulaCar.Championships.Importers.Loaders;
 using FormulaCar.Championships.Service.Abstraction;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace FormulaCar.Championships.Importers.Services
+namespace FormulaCar.Championships.Importers.Services;
+
+public class CircuitImporter : BackgroundService
 {
-    public class CircuitImporter : BackgroundService
+    private readonly ICircuitFetcher _circuitFetcher;
+    private readonly ImportSettings _importSettings;
+    private readonly ILogger<CountryImporter> _logger;
+    private readonly IServiceManager _serviceManager;
+
+    public CircuitImporter(IServiceManager serviceManager, ICircuitFetcher circuitFetcher,
+        IOptions<ImportSettings> options, ILogger<CountryImporter> logger)
     {
-        private readonly IServiceManager _serviceManager;
-        private readonly ICircuitFetcher _circuitFetcher;
-        private readonly ImportSettings _importSettings;
-        private readonly ILogger<CountryImporter> _logger;
+        _serviceManager = serviceManager;
+        _circuitFetcher = circuitFetcher;
+        _logger = logger;
+        _importSettings = options.Value;
+    }
 
-        public CircuitImporter(IServiceManager serviceManager, ICircuitFetcher circuitFetcher, IOptions<ImportSettings> options, ILogger<CountryImporter> logger)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        var exisitingCircuites = await _serviceManager.CircuiteService.GetAll();
+        if (exisitingCircuites != null && exisitingCircuites.Any())
         {
-            _serviceManager = serviceManager;
-            _circuitFetcher = circuitFetcher;
-            _logger = logger;
-            _importSettings = options.Value;
+            _logger.LogInformation("Circuites exist!!!");
+            return;
         }
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+
+        var circuites = await _circuitFetcher.GetCircuites();
+        var uniqNamesOfCircuites = exisitingCircuites.Select(x => x.Name);
+        foreach (var circuitDto in circuites)
         {
-            var exisitingCircuites = await _serviceManager.CircuiteService.GetAll();
-            if (exisitingCircuites != null && exisitingCircuites.Any())
+            if (uniqNamesOfCircuites.Contains(circuitDto.Name))
             {
-                _logger.LogInformation("Circuites exist!!!");
-                return;
+                _logger.LogWarning(circuitDto.Name + " existing in DB");
+                continue;
             }
 
-            var circuites = await _circuitFetcher.GetCircuites();
-            var uniqNamesOfCircuites = exisitingCircuites.Select(x => x.Name);
-            foreach (var circuitDto in circuites)
+            var countryId = await _serviceManager.CountryService.GetIdByCode(circuitDto.CountryCode);
+            if (countryId == -1)
             {
-                if (uniqNamesOfCircuites.Contains(circuitDto.Name))
-                {
-                    _logger.LogWarning(circuitDto.Name+" existing in DB");
-                    continue;
-                }
-
-                var countryId = await _serviceManager.CountryService.GetIdByCode(circuitDto.CountryCode);
-                if (countryId == -1)
-                {
-                    _logger.LogWarning(circuitDto.Name+"["+circuitDto.City+"]"+" not inserted. Could not be found country id for code:"+circuitDto.CountryCode);
-                    continue;
-                }
-                var newCircuit = new CircuitForCreationDto()
-                {
-                    City = circuitDto.City,
-                    CountryId = countryId,
-                    Name = circuitDto.Name
-                };
-
-                var createdCircuit = await _serviceManager.CircuiteService.Create(newCircuit);
-                _logger.LogInformation(createdCircuit.Name+" created circuit with id:"+createdCircuit.CircuitId);
+                _logger.LogWarning(circuitDto.Name + "[" + circuitDto.City + "]" +
+                                   " not inserted. Could not be found country id for code:" + circuitDto.CountryCode);
+                continue;
             }
 
-            _logger.LogInformation(Enumerable.Repeat("=", 50).ToString());
-            _logger.LogInformation("Import started!!!");
-           
-            /*foreach (var country in countries)
+            var newCircuit = new CircuitForCreationDto
             {
-                var countryForCreation = new CountryForCreationDto()
-                {
-                    Code = country.Code,
-                    OriginalName = country.Name
-                };
-                var createdCountry = await _serviceManager.CountryService.Create(countryForCreation, stoppingToken);
-                _logger.LogInformation("New country created :" + createdCountry.CountryId + "   [" + createdCountry.Name + "]");
-            }*/
+                City = circuitDto.City,
+                CountryId = countryId,
+                Name = circuitDto.Name
+            };
 
-
-            _logger.LogInformation("Import ended!!!");
-            _logger.LogInformation(Enumerable.Repeat("=", 50).ToString());
-
+            var createdCircuit = await _serviceManager.CircuiteService.Create(newCircuit);
+            _logger.LogInformation(createdCircuit.Name + " created circuit with id:" + createdCircuit.CircuitId);
         }
+
+        _logger.LogInformation(Enumerable.Repeat("=", 50).ToString());
+        _logger.LogInformation("Import started!!!");
+
+        /*foreach (var country in countries)
+        {
+            var countryForCreation = new CountryForCreationDto()
+            {
+                Code = country.Code,
+                OriginalName = country.Name
+            };
+            var createdCountry = await _serviceManager.CountryService.Create(countryForCreation, stoppingToken);
+            _logger.LogInformation("New country created :" + createdCountry.CountryId + "   [" + createdCountry.Name + "]");
+        }*/
+
+
+        _logger.LogInformation("Import ended!!!");
+        _logger.LogInformation(Enumerable.Repeat("=", 50).ToString());
     }
 }

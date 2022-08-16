@@ -29,11 +29,11 @@ public class CountryRepository : RepositoryBase<Country>, ICountryRepository
     {
         return await RepositoryContext.Countries.Include(x => x.MediaTag).ToListAsync();
     }
-    
+
     public async Task<bool> InsertCountry(Country country, int mediaTagId)
     {
         var mediaTag = await RepositoryContext.MediaTags.FirstOrDefaultAsync(x => x.Id == mediaTagId);
-        country.MediaTag= mediaTag;
+        country.MediaTag = mediaTag;
 
         await RepositoryContext.Countries.AddAsync(country);
 

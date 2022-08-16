@@ -10,7 +10,7 @@ public class CircuiteFetcher : ICircuitFetcher
     private readonly HttpClient _httpClient;
     private readonly ImportSettings _importSettings;
 
-    public CircuiteFetcher(HttpClient httpClient,IOptions<ImportSettings> options)
+    public CircuiteFetcher(HttpClient httpClient, IOptions<ImportSettings> options)
     {
         _httpClient = httpClient;
         _importSettings = options.Value;
@@ -23,10 +23,9 @@ public class CircuiteFetcher : ICircuitFetcher
 
         var responseContent = await response.Content.ReadAsStringAsync();
 
-        List<CircuitDto> circuitDtos = new List<CircuitDto>();
+        var circuitDtos = new List<CircuitDto>();
         if (response.IsSuccessStatusCode)
         {
-           
             var doc = new HtmlDocument();
             doc.LoadHtml(responseContent);
 
@@ -43,11 +42,7 @@ public class CircuiteFetcher : ICircuitFetcher
                 }
 
                 var columns = htmlNode.Descendants("td").ToArray();
-                if (columns.Length < 4)
-                {
-                   
-                    continue;
-                }
+                if (columns.Length < 4) continue;
 
                 var circuit = columns[0].Descendants("a").FirstOrDefault().InnerHtml;
                 var location = columns[2].InnerHtml;
@@ -55,7 +50,7 @@ public class CircuiteFetcher : ICircuitFetcher
                 location = location.Substring(0, indexOfNewLine);
                 var country = columns[3].Descendants("a").LastOrDefault().InnerHtml;
                 var race = columns[4].Descendants("a").FirstOrDefault().InnerHtml;
-                var circuiteDto = new CircuitDto()
+                var circuiteDto = new CircuitDto
                 {
                     City = location,
                     CountryCode = country,

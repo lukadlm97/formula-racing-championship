@@ -8,7 +8,7 @@ public class Booking
     public DateTime End { get; set; }
 
     public bool IsActive { get; set; }
-    
+
     public int DriverId { get; set; }
     public int ConstructorId { get; set; }
     public int SeasonId { get; set; }

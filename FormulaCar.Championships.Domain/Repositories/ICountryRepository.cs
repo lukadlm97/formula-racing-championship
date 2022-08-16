@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FormulaCar.Championships.Domain.Entities;
+﻿using FormulaCar.Championships.Domain.Entities;
 
-namespace FormulaCar.Championships.Domain.Repositories
+namespace FormulaCar.Championships.Domain.Repositories;
+
+public interface ICountryRepository : IBaseRepository<Country>
 {
-    public interface ICountryRepository:IBaseRepository<Country>
-    {
-        Task<IEnumerable<Driver>> GetDrivers(int countryId);
-        Task<IEnumerable<Constructor>> GetConstructors(int countryId);
-        Task<IEnumerable<Circuite>> GetCircuites(int countryId);
-        Task<IEnumerable<Country>> GetAllWithMedia();
-        Task<bool> InsertCountry(Country country,int mediaTagId);
-    }
+    Task<IEnumerable<Driver>> GetDrivers(int countryId);
+    Task<IEnumerable<Constructor>> GetConstructors(int countryId);
+    Task<IEnumerable<Circuite>> GetCircuites(int countryId);
+    Task<IEnumerable<Country>> GetAllWithMedia();
+    Task<bool> InsertCountry(Country country, int mediaTagId);
 }

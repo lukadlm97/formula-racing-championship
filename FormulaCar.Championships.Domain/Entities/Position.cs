@@ -1,6 +1,4 @@
-﻿using System.Security.AccessControl;
-
-namespace FormulaCar.Championships.Domain.Entities;
+﻿namespace FormulaCar.Championships.Domain.Entities;
 
 public class Position
 {

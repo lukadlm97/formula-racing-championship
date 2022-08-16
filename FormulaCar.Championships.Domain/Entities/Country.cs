@@ -8,5 +8,5 @@ public class Country
     public MediaTag? MediaTag { get; set; }
     public ICollection<Driver> Drivers { get; set; }
     public ICollection<Constructor> Constructors { get; set; }
-    public ICollection<Circuite> Circuites{ get; set; }
+    public ICollection<Circuite> Circuites { get; set; }
 }

@@ -23,7 +23,7 @@ public class DriverImporter : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         _logger.LogInformation("import drivers started!!!");
-        
+
         var newDrivers = _csvLoader.GetDrivers();
 
         _logger.LogInformation("loaded " + newDrivers.Count() + " drivers");
@@ -56,9 +56,8 @@ public class DriverImporter : BackgroundService
             }
             else
             {
-
-                _logger.LogInformation("driver exist: "+ driverImportFormat.FirstName+" "+
-                    driverImportFormat.LastName);
+                _logger.LogInformation("driver exist: " + driverImportFormat.FirstName + " " +
+                                       driverImportFormat.LastName);
             }
 
         _logger.LogInformation("import drivers ended!!!");

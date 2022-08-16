@@ -1,6 +1,7 @@
 ﻿using FormulaCar.Championships.Domain.Repositories;
 using FormulaCar.Championships.Persistence;
 using FormulaCar.Championships.Persistence.Repositories;
+using FormulaCar.Championships.Presentation;
 using FormulaCar.Championships.Service;
 using FormulaCar.Championships.Service.Abstraction;
 using FormulaCar.Championships.Service.Mappers;
@@ -16,7 +17,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-ConfigureServices(builder.Services,builder.Configuration);
+ConfigureServices(builder.Services, builder.Configuration);
 ConfigureLogging(builder.Logging, builder.Configuration);
 builder.Host.UseNLog();
 
@@ -37,12 +38,9 @@ app.MapControllers();
 app.Run();
 
 
-
-
-
-void ConfigureServices(IServiceCollection serviceCollection,IConfiguration configuration)
+void ConfigureServices(IServiceCollection serviceCollection, IConfiguration configuration)
 {
-    serviceCollection.AddControllers().AddApplicationPart(typeof(FormulaCar.Championships.Presentation.AssemblyReference).Assembly);
+    serviceCollection.AddControllers().AddApplicationPart(typeof(AssemblyReference).Assembly);
     serviceCollection.AddScoped<IServiceManager, ServiceManager>();
 
     serviceCollection.AddScoped<IRepositoryManager, RepositoryManager>();
@@ -56,7 +54,6 @@ void ConfigureServices(IServiceCollection serviceCollection,IConfiguration confi
 
     serviceCollection.AddAutoMapper(typeof(PositionProfile));
     serviceCollection.AddScoped<ExceptionHandlingMiddleware>();
-
 }
 
 void ConfigureLogging(ILoggingBuilder loggingBuilder, IConfiguration configuration)

@@ -8,4 +8,5 @@ public interface IServiceManager
     ICountryService CountryService { get; }
     ICircuiteService CircuiteService { get; }
     IDriverService DriverService { get; }
+    IConstructorService ConstructorService { get; } 
 }
