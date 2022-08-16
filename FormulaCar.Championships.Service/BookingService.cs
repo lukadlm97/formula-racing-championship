@@ -1,0 +1,108 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AutoMapper;
+using FormulaCar.Championships.Contracts;
+using FormulaCar.Championships.Domain.Entities;
+using FormulaCar.Championships.Domain.Exceptions;
+using FormulaCar.Championships.Domain.Repositories;
+using FormulaCar.Championships.Service.Abstraction;
+
+namespace FormulaCar.Championships.Service
+{
+    public class BookingService:IBookingService
+    {
+        private readonly IRepositoryManager _repositoryManager;
+        private readonly IMapper _mapper;
+
+        public BookingService(IRepositoryManager repositoryManager, IMapper mapper)
+        {
+            _repositoryManager = repositoryManager;
+            _mapper = mapper;
+        }
+        public async Task<IEnumerable<BookingDto>> GetAll()
+        {
+            var bookings = await _repositoryManager.BookingRepository.FindAll();
+            var seasons = await _repositoryManager.SeasonRepository.FindAll();
+            var drivers = await _repositoryManager.DriverRepository.FindAll();
+            var constructor = await _repositoryManager.ConstructorRepository.FindAll();
+            List<BookingDto> bookingDtos = new List<BookingDto>();
+            foreach (var booking in bookings)
+            {
+                var selectedConstructor = constructor.FirstOrDefault(x => x.Id == booking.ConstructorId);
+                var selectedDriver = drivers.FirstOrDefault(x => x.Id == booking.DriverId);
+                var selectedSeason= seasons.FirstOrDefault(x => x.Id == booking.SeasonId);
+                var newBooking = new BookingDto()
+                {
+                    Season = selectedSeason.Year.ToString(),
+                    ConstructorName = selectedConstructor.Name,
+                    DriverName = selectedDriver.FirstName + selectedDriver.LastName
+                };
+                bookingDtos.Add(newBooking);
+            }
+
+            return bookingDtos;
+        }
+
+        public async Task<BookingDto> Create(BookingForCreationDto bookingForCreationDto)
+        {
+            var seasons = await _repositoryManager.SeasonRepository.FindByCondition(x=>x.Year==bookingForCreationDto.Year);
+            var drivers = await _repositoryManager.DriverRepository.FindByCondition(x=>(x.FirstName.ToLower()+" "+x.LastName.ToLower()).Contains(bookingForCreationDto.Driver.ToLower()));
+            var constructors = await _repositoryManager.ConstructorRepository.FindByCondition(x=>x.Name.ToLower().Contains(bookingForCreationDto.Constructor.ToLower()));
+
+            var selectedSeason = seasons.FirstOrDefault();
+            var selectedDriver = drivers.FirstOrDefault();
+            var selectedConstructor = constructors.FirstOrDefault();
+
+            if (selectedConstructor == null || selectedDriver == null || selectedSeason == null)
+            {
+                return null;
+            }
+
+            var newBooking = new Booking()
+            {
+                ConstructorId = selectedConstructor.Id,
+                DriverId = selectedDriver.Id,
+                SeasonId = selectedSeason.Id,
+                Start = DateTime.Now,
+                End = DateTime.Now.AddDays(150),
+            };
+
+             _repositoryManager.BookingRepository.Insert(newBooking);
+             await _repositoryManager.UnitOfWork.SaveChangesAsync();
+
+             var createdBooking = new BookingDto()
+             {
+                 Season = selectedSeason.Year.ToString(),
+                 ConstructorName = selectedConstructor.Name,
+                 DriverName = selectedDriver.FirstName+" "+selectedDriver.LastName,
+             };
+
+             return createdBooking;
+        }
+
+        public async Task<bool> Exist(string driver, string constructor, string season)
+        {
+            
+            var seasons = await _repositoryManager.SeasonRepository.FindByCondition(x => x.Year.ToString() == season);
+            var drivers = await _repositoryManager.DriverRepository.FindByCondition(x => x.FirstName.ToLower() + " " + x.LastName.ToLower() == driver.ToLower());
+            var constructors = await _repositoryManager.ConstructorRepository.FindByCondition(x => x.Name.ToLower().Contains(constructor.ToLower()));
+
+            var selectedSeason = seasons.FirstOrDefault();
+            var selectedDriver = drivers.FirstOrDefault();
+            var selectedConstructor = constructors.FirstOrDefault();
+          
+
+            if (selectedConstructor == null || selectedDriver == null || selectedSeason == null)
+            {
+                return false;
+            }
+
+            var bookings =
+                await _repositoryManager.BookingRepository.FindByCondition(x => x.DriverId == selectedDriver.Id);
+            return bookings.Any(x => x.ConstructorId == selectedConstructor.Id && x.SeasonId == selectedSeason.Id);
+        }
+    }
+}

@@ -9,4 +9,5 @@ public interface IServiceManager
     ICircuiteService CircuiteService { get; }
     IDriverService DriverService { get; }
     IConstructorService ConstructorService { get; } 
+    IBookingService BookingService { get; }
 }

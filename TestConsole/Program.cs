@@ -147,6 +147,9 @@ foreach (var htmlNode in nodes)
     Console.WriteLine(htmlNode.ToString());
 }
 */
+
+//TODO constructor import
+/*
 HttpClient client = new HttpClient();
 
 
@@ -185,6 +188,60 @@ foreach (var constructor in constructors)
     
    // Console.WriteLine(constructor.InnerHtml);
 }
+
+*/
+
+
+HttpClient client = new HttpClient();
+
+
+var response = await client.GetAsync($"https://www.goodwood.com/grr/race/modern/2021/7/2022-f1-drivers-and-teams/");
+
+var responseContent = await response.Content.ReadAsStringAsync();
+
+if (response.IsSuccessStatusCode)
+{
+    // Console.WriteLine(responseContent);
+}
+
+HtmlDocument doc = new HtmlDocument();
+doc.LoadHtml(responseContent);
+
+var nodes = doc.DocumentNode.Descendants("table").ToList();
+var bookingNode = nodes[0];
+
+var bookings = bookingNode.Descendants("tr").ToList();
+
+var init = true;
+foreach (var booking in bookings)
+{
+    if (init)
+    {
+        init = false;
+        continue;
+    }
+    var columns = booking.Descendants("td").ToArray();
+    var team = columns[0].Descendants("p").FirstOrDefault().InnerHtml;
+    if (team.ToLower().Contains("racing"))
+    {
+        //team = team.Replace("Racing","");
+        var splittedTeam = team.Split("Racing");
+        foreach (var s in splittedTeam)
+        {
+            s.Trim(' ');
+        }
+        team = string.Join('\0',splittedTeam);
+    }
+    var driver1 = columns[1].Descendants("p").FirstOrDefault().InnerHtml;
+    var driver2 = columns[1].Descendants("p").LastOrDefault().InnerHtml;
+    //var firstApperance = columns[4].Descendants("a").LastOrDefault().InnerHtml;
+
+    Console.WriteLine(team + " [ " + driver1 + " | " + driver2 + "    " + " ] ");
+
+    // Console.WriteLine(constructor.InnerHtml);
+}
+
+
 
 
 

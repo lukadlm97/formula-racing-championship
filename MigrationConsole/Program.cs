@@ -48,13 +48,14 @@ static IHostBuilder CreateHostBuilder(string[] args)
             services.AddSingleton<ICsvLoader, CsvLoader>();
             services.AddSingleton<IJsonLoader, JsonLoader>();
             services.AddSingleton<IConstructorFetcher, ConstructorFetcher>();
+            services.AddSingleton<IBookingfetcher, BookingFetcher>();
             var importConfig = configuration.GetSection("ImporterConfiguration");
             services.Configure<ImportSettings>(importConfig);
             services.AddHttpClient<ICircuitFetcher, CircuiteFetcher>(client =>
             {
                 client.BaseAddress = new Uri(configuration["ImporterConfiguration:CircuiteSourceUrl"]);
             });
-            services.AddHostedService<ConstructorImporter>();
+            services.AddHostedService<BookingImporter>();
         }).ConfigureLogging(loggingBuilder =>
         {
             var configuration = new ConfigurationBuilder()

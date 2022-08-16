@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FormulaCar.Championships.Contracts;
 using FormulaCar.Championships.Domain.Repositories;
 using FormulaCar.Championships.Service.Abstraction;
 
@@ -13,6 +14,7 @@ public class ServiceManager : IServiceManager
     private readonly Lazy<IQualificationPeriodsService> _lazyQualificationPeriodsService;
     private readonly Lazy<ISectorService> _lazySectorService;
     private readonly Lazy<IConstructorService> _lazyConstructorService;
+    private readonly Lazy<IBookingService> _lazyBookingService;
     private readonly IMapper _mapper;
 
     public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper)
@@ -26,6 +28,7 @@ public class ServiceManager : IServiceManager
         _lazyCircuiteService = new Lazy<ICircuiteService>(() => new CircuiteService(repositoryManager, _mapper));
         _lazyDriverService = new Lazy<IDriverService>(() => new DriverService(repositoryManager, _mapper));
         _lazyConstructorService = new Lazy<IConstructorService>(() => new ConstructorService(repositoryManager, _mapper));
+        _lazyBookingService = new Lazy<IBookingService>(() => new BookingService(repositoryManager, _mapper));
     }
 
     public IPositionService PositionService => _lazyPositionService.Value;
@@ -35,4 +38,5 @@ public class ServiceManager : IServiceManager
     public ICircuiteService CircuiteService => _lazyCircuiteService.Value;
     public IDriverService DriverService => _lazyDriverService.Value;
     public IConstructorService ConstructorService => _lazyConstructorService.Value;
+    public IBookingService BookingService => _lazyBookingService.Value;
 }
