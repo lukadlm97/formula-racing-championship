@@ -50,13 +50,18 @@ static IHostBuilder CreateHostBuilder(string[] args)
             services.AddSingleton<IConstructorFetcher, ConstructorFetcher>();
             services.AddSingleton<IBookingfetcher, BookingFetcher>();
             services.AddSingleton<IGrandPrixFetcher, GrandPrixFetcher>();
+            services.AddSingleton<IRaceFetcher, RaceFetcher>();
             var importConfig = configuration.GetSection("ImporterConfiguration");
+            var mapperConfig = configuration.GetSection("FiaTeamsMapping");
+            var circuiteConfig = configuration.GetSection("FiaGrandPrixMapping");
             services.Configure<ImportSettings>(importConfig);
+            services.Configure<TeamMapperSettings>(mapperConfig);
+            services.Configure<CircuitMapperSettings>(circuiteConfig);
             services.AddHttpClient<ICircuitFetcher, CircuiteFetcher>(client =>
             {
                 client.BaseAddress = new Uri(configuration["ImporterConfiguration:CircuiteSourceUrl"]);
             });
-            services.AddHostedService<GrandPrixImporter>();
+            services.AddHostedService<RaceResultImporter>();
         }).ConfigureLogging(loggingBuilder =>
         {
             var configuration = new ConfigurationBuilder()

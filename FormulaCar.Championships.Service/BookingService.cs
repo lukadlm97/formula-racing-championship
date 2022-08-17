@@ -38,7 +38,7 @@ namespace FormulaCar.Championships.Service
                 {
                     Season = selectedSeason.Year.ToString(),
                     ConstructorName = selectedConstructor.Name,
-                    DriverName = selectedDriver.FirstName + selectedDriver.LastName
+                    DriverName = selectedDriver.FirstName +" "+ selectedDriver.LastName
                 };
                 bookingDtos.Add(newBooking);
             }

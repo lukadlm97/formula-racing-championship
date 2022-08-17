@@ -11,4 +11,5 @@ public interface IServiceManager
     IConstructorService ConstructorService { get; } 
     IBookingService BookingService { get; }
     IRaceweekService RaceweekService { get; }
+    IRaceClassificationService RaceClassificationService { get; }
 }
