@@ -6,6 +6,7 @@ public class Raceweek
     public int OrderNumber { get; set; }
     public bool IsContainsSprintQualification { get; set; }
     public Circuite Circuite { get; set; }
+    public int CircuiteId { get; set; }
     public int SeasonId { get; set; }
     public ICollection<Result> Results { get; set; }
 }

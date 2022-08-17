@@ -62,6 +62,26 @@ namespace FormulaCar.Championships.Importers.Fetchers
                 }
                 var driver1 = columns[1].Descendants("p").FirstOrDefault().InnerHtml;
                 var driver2 = columns[1].Descendants("p").LastOrDefault().InnerHtml;
+                if (driver1.Contains("P&eacute;rez"))
+                {
+                    driver1 = driver1.Replace("P&eacute;rez", "Perez");
+                }
+                if (driver2.Contains("P&eacute;rez"))
+                {
+                    driver2 = driver2.Replace("P&eacute;rez", "Perez");
+                }
+
+                if (driver1.Contains("Jr."))
+                {
+                    driver1 = driver1.Replace("Jr.", "");
+                    driver1 = driver1.Trim(' ');
+                }
+                if (driver2.Contains("Jr."))
+                {
+                    driver2 = driver2.Replace("Jr.", "");
+                    driver2 = driver2.Trim(' ');
+                }
+
                 bookingDtos.Add(new BookingDto()
                 {
                     Season = 2022.ToString(),

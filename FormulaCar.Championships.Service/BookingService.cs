@@ -50,11 +50,10 @@ namespace FormulaCar.Championships.Service
         {
             var seasons = await _repositoryManager.SeasonRepository.FindByCondition(x=>x.Year==bookingForCreationDto.Year);
             var drivers = await _repositoryManager.DriverRepository.FindByCondition(x=>(x.FirstName.ToLower()+" "+x.LastName.ToLower()).Contains(bookingForCreationDto.Driver.ToLower()));
-            var constructors = await _repositoryManager.ConstructorRepository.FindByCondition(x=>x.Name.ToLower().Contains(bookingForCreationDto.Constructor.ToLower()));
 
             var selectedSeason = seasons.FirstOrDefault();
             var selectedDriver = drivers.FirstOrDefault();
-            var selectedConstructor = constructors.FirstOrDefault();
+            var selectedConstructor =await FindConstructor(constructorName:bookingForCreationDto.Constructor);
 
             if (selectedConstructor == null || selectedDriver == null || selectedSeason == null)
             {
@@ -88,11 +87,10 @@ namespace FormulaCar.Championships.Service
             
             var seasons = await _repositoryManager.SeasonRepository.FindByCondition(x => x.Year.ToString() == season);
             var drivers = await _repositoryManager.DriverRepository.FindByCondition(x => x.FirstName.ToLower() + " " + x.LastName.ToLower() == driver.ToLower());
-            var constructors = await _repositoryManager.ConstructorRepository.FindByCondition(x => x.Name.ToLower().Contains(constructor.ToLower()));
 
             var selectedSeason = seasons.FirstOrDefault();
             var selectedDriver = drivers.FirstOrDefault();
-            var selectedConstructor = constructors.FirstOrDefault();
+            var selectedConstructor = await FindConstructor(constructor);
           
 
             if (selectedConstructor == null || selectedDriver == null || selectedSeason == null)
@@ -104,5 +102,24 @@ namespace FormulaCar.Championships.Service
                 await _repositoryManager.BookingRepository.FindByCondition(x => x.DriverId == selectedDriver.Id);
             return bookings.Any(x => x.ConstructorId == selectedConstructor.Id && x.SeasonId == selectedSeason.Id);
         }
+
+
+        async Task<Constructor> FindConstructor(string constructorName)
+        {
+            var constructors = await _repositoryManager.ConstructorRepository.FindAll();
+
+            foreach (var constructor in constructors)
+            {
+                var splitedConstructor = constructor.Name.Split('-').FirstOrDefault();
+
+                if (splitedConstructor.ToLower().Contains(constructorName.ToLower()))
+                {
+                    return constructor;
+                }
+            }
+
+            return null;
+        }
+
     }
 }

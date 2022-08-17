@@ -49,13 +49,14 @@ static IHostBuilder CreateHostBuilder(string[] args)
             services.AddSingleton<IJsonLoader, JsonLoader>();
             services.AddSingleton<IConstructorFetcher, ConstructorFetcher>();
             services.AddSingleton<IBookingfetcher, BookingFetcher>();
+            services.AddSingleton<IGrandPrixFetcher, GrandPrixFetcher>();
             var importConfig = configuration.GetSection("ImporterConfiguration");
             services.Configure<ImportSettings>(importConfig);
             services.AddHttpClient<ICircuitFetcher, CircuiteFetcher>(client =>
             {
                 client.BaseAddress = new Uri(configuration["ImporterConfiguration:CircuiteSourceUrl"]);
             });
-            services.AddHostedService<BookingImporter>();
+            services.AddHostedService<GrandPrixImporter>();
         }).ConfigureLogging(loggingBuilder =>
         {
             var configuration = new ConfigurationBuilder()

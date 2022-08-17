@@ -15,6 +15,7 @@ public class ServiceManager : IServiceManager
     private readonly Lazy<ISectorService> _lazySectorService;
     private readonly Lazy<IConstructorService> _lazyConstructorService;
     private readonly Lazy<IBookingService> _lazyBookingService;
+    private readonly Lazy<IRaceweekService> _lazyRaceweekService;
     private readonly IMapper _mapper;
 
     public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper)
@@ -29,6 +30,7 @@ public class ServiceManager : IServiceManager
         _lazyDriverService = new Lazy<IDriverService>(() => new DriverService(repositoryManager, _mapper));
         _lazyConstructorService = new Lazy<IConstructorService>(() => new ConstructorService(repositoryManager, _mapper));
         _lazyBookingService = new Lazy<IBookingService>(() => new BookingService(repositoryManager, _mapper));
+        _lazyRaceweekService = new Lazy<IRaceweekService>(() => new RaceweekService(repositoryManager, _mapper));
     }
 
     public IPositionService PositionService => _lazyPositionService.Value;
@@ -39,4 +41,5 @@ public class ServiceManager : IServiceManager
     public IDriverService DriverService => _lazyDriverService.Value;
     public IConstructorService ConstructorService => _lazyConstructorService.Value;
     public IBookingService BookingService => _lazyBookingService.Value;
+    public IRaceweekService RaceweekService => _lazyRaceweekService.Value;
 }

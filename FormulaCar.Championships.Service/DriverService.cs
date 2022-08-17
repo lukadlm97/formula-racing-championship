@@ -141,9 +141,6 @@ public class DriverService : IDriverService
             case "Belgian":
                 country = countries.FirstOrDefault(x => x.Code.ToLower().Contains("BEL".ToLower()));
                 break;
-            case "Monegasque":
-                country = countries.FirstOrDefault(x => x.Code.ToLower().Contains("MON".ToLower()));
-                break;
             case "Swedish":
                 country = countries.FirstOrDefault(x => x.Code.ToLower().Contains("SWE".ToLower()));
                 break;
@@ -161,6 +158,12 @@ public class DriverService : IDriverService
                 break;
             case "Russian":
                 country = countries.FirstOrDefault(x => x.Code.ToLower().Contains("RUS".ToLower()));
+                break;
+            case "Monegasque":
+                country = countries.FirstOrDefault(x => x.Code.ToLower().Contains("MCO".ToLower()));
+                break; 
+            case "Thai":
+                country = countries.FirstOrDefault(x => x.Code.ToLower().Contains("THA".ToLower()));
                 break;
 
 

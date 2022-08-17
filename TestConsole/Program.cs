@@ -1,5 +1,4 @@
-﻿using System.Text;
-using HtmlAgilityPack;
+﻿using HtmlAgilityPack;
 
 
 /*
@@ -192,6 +191,7 @@ foreach (var constructor in constructors)
 */
 
 
+/*
 HttpClient client = new HttpClient();
 
 
@@ -240,9 +240,56 @@ foreach (var booking in bookings)
 
     // Console.WriteLine(constructor.InnerHtml);
 }
+*/
 
 
+var client = new HttpClient();
 
+
+var response = await client.GetAsync("https://en.wikipedia.org/wiki/2022_Formula_One_World_Championship");
+
+var responseContent = await response.Content.ReadAsStringAsync();
+
+if (response.IsSuccessStatusCode)
+{
+    // Console.WriteLine(responseContent);
+}
+
+var doc = new HtmlDocument();
+doc.LoadHtml(responseContent);
+
+var nodes = doc.DocumentNode.Descendants("table").ToList();
+var grandPrixs = nodes[1];
+
+var singleGrandPrixs = grandPrixs.Descendants("tr").ToList();
+
+var init = true;
+var round = 1;
+foreach (var grandPrix in singleGrandPrixs)
+{
+    if (init)
+    {
+        init = false;
+        continue;
+    }
+
+    var columns = grandPrix.Descendants("td").ToArray();
+    if (columns.Length!=3) continue;
+    var fullName = columns[1].Descendants("a").LastOrDefault().InnerHtml;
+    var city = fullName;
+    if (fullName.Contains(','))
+    {
+        var parted = fullName.Split(',');
+        city = parted[0];
+    }
+
+
+    if (city.ToLower() == "Stavelot".ToLower()) city = "Francorchamps";
+
+    Console.WriteLine(round + "   -   " + city);
+    round++;
+    // Console.WriteLine(constructor.InnerHtml);
+}
 
 
 Console.WriteLine("press any key to close...");
