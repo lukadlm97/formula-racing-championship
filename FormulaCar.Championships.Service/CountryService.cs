@@ -52,6 +52,24 @@ public class CountryService : ICountryService
         return country.Id;
     }
 
+    public async Task<int> GetIdByName(string name)
+    {
+        var countries = await _repositoryManager.CountryRepository.FindByCondition(x => x.Name.ToLower().Contains(name.Trim(' ').ToLower()));
+
+        if (countries == null || countries.Count() != 1)
+        {
+            if (name.ToLower() == "United States".ToLower())
+            {
+                return countries.FirstOrDefault().Id;
+            }
+            return -1;
+        }
+
+        var country = countries.FirstOrDefault();
+
+        return country.Id;
+    }
+
     public async Task<string> GetCodeById(int id)
     {
         var countries = await _repositoryManager.CountryRepository.FindByCondition(x => x.Id == id);

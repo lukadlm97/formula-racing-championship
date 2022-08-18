@@ -18,12 +18,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\FormulaCar.Championships.Domain\FormulaCar.Championships.Domain.csproj" />
-		<ProjectReference
-			Include="..\FormulaCar.Championships.Service.Abstraction\FormulaCar.Championships.Service.Abstraction.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Migrations\" />
+		<ProjectReference Include="..\FormulaCar.Championships.Service.Abstraction\FormulaCar.Championships.Service.Abstraction.csproj" />
 	</ItemGroup>
 
 </Project>

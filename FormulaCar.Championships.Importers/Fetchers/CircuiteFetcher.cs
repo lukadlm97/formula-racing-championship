@@ -29,7 +29,9 @@ public class CircuiteFetcher : ICircuitFetcher
             var doc = new HtmlDocument();
             doc.LoadHtml(responseContent);
 
-            var table = doc.DocumentNode.Descendants("table").FirstOrDefault();
+
+            var tables = doc.DocumentNode.Descendants("table").ToArray();
+            var table = tables[2];
 
             var rows = table.Descendants("tr").ToList();
             var init = true;
@@ -40,17 +42,22 @@ public class CircuiteFetcher : ICircuitFetcher
                     init = false;
                     continue;
                 }
-
                 var columns = htmlNode.Descendants("td").ToArray();
-                if (columns.Length < 4) continue;
-
+                if (columns.Length < 4)
+                {
+                    var defaultColor = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine(htmlNode.InnerHtml);
+                    Console.ForegroundColor = defaultColor;
+                    continue;
+                }
                 var circuit = columns[0].Descendants("a").FirstOrDefault().InnerHtml;
-                var location = columns[2].InnerHtml;
-                var indexOfNewLine = location.IndexOf("\n");
-                location = location.Substring(0, indexOfNewLine);
-                var country = columns[3].Descendants("a").LastOrDefault().InnerHtml;
-                var race = columns[4].Descendants("a").FirstOrDefault().InnerHtml;
-                var circuiteDto = new CircuitDto
+                var location = columns[4].Descendants("a").FirstOrDefault().InnerHtml;
+                var country = columns[4].Descendants("a").LastOrDefault().InnerHtml;
+                var race = columns[6].Descendants("a").FirstOrDefault().InnerHtml;
+                //  var length = double.Parse(columns[5].Descendants("a").FirstOrDefault().InnerHtml.Split(' ')[0]);
+                Console.WriteLine(circuit + " - " + location + " - " + country + " - " + race);
+                var circuiteDto = new CircuitDto()
                 {
                     City = location,
                     CountryCode = country,
@@ -58,6 +65,7 @@ public class CircuiteFetcher : ICircuitFetcher
                 };
                 circuitDtos.Add(circuiteDto);
             }
+            
         }
 
         return circuitDtos;

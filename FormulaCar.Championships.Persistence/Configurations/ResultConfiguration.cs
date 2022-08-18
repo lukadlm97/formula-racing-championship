@@ -11,7 +11,8 @@ public class ResultConfiguration : IEntityTypeConfiguration<Result>
         builder.ToTable("Result");
         builder.HasKey(result => result.Id);
         builder.Property(result => result.Id).ValueGeneratedOnAdd();
-        builder.HasOne(result => result.Position);
-        //builder.HasOne(result => result.RaceClassification);
+        builder.HasOne(result => result.Position)
+            .WithMany(position=>position.Results)
+            .HasForeignKey(result=>result.PositionId);
     }
 }

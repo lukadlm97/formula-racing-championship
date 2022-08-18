@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FormulaCar.Championships.Persistence.Migrations
 {
     [DbContext(typeof(RepositoryDbContext))]
-    [Migration("20220808130230_Race-Realated-Results-Added")]
-    partial class RaceRealatedResultsAdded
+    [Migration("20220818123759_Init_Migration")]
+    partial class Init_Migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.7")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -549,7 +549,7 @@ namespace FormulaCar.Championships.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("FormulaCar.Championships.Domain.Entities.Position", "Position")
-                        .WithMany()
+                        .WithMany("Results")
                         .HasForeignKey("PositionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -655,6 +655,11 @@ namespace FormulaCar.Championships.Persistence.Migrations
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Driver", b =>
                 {
                     b.Navigation("Bookings");
+                });
+
+            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Position", b =>
+                {
+                    b.Navigation("Results");
                 });
 
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Raceweek", b =>

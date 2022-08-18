@@ -23,14 +23,14 @@ namespace FormulaCar.Championships.Importers.Fetchers
         public async Task<IEnumerable<BookingDto>> GetBookings()
         {
             List<BookingDto> bookingDtos = new List<BookingDto>();
-            var response = await _httpClient.GetAsync($"https://www.goodwood.com/grr/race/modern/2021/7/2022-f1-drivers-and-teams/");
+            var response = await _httpClient.GetAsync(_importSettings.BookingsSourceUrl);
 
             var responseContent = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
                 // Console.WriteLine(responseContent);
-            }
+           
 
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(responseContent);
@@ -59,6 +59,9 @@ namespace FormulaCar.Championships.Importers.Fetchers
                         s.Trim(' ');
                     }
                     team = string.Join('\0', splittedTeam);
+                }else if (team.ToLower().Contains('-'))
+                {
+                    team = team.Split('-')[0];
                 }
                 var driver1 = columns[1].Descendants("p").FirstOrDefault().InnerHtml;
                 var driver2 = columns[1].Descendants("p").LastOrDefault().InnerHtml;
@@ -69,7 +72,25 @@ namespace FormulaCar.Championships.Importers.Fetchers
                 if (driver2.Contains("P&eacute;rez"))
                 {
                     driver2 = driver2.Replace("P&eacute;rez", "Perez");
+                } 
+                
+                if (driver1.Contains("Sebastien"))
+                {
+                    driver1 = driver1.Replace("Sebastien", "Sebastian");
                 }
+                if (driver2.Contains("Sebastien"))
+                {
+                    driver2 = driver2.Replace("Sebastien", "Sebastian");
+                }  
+                if (driver1.Contains("Antonion"))
+                {
+                    driver1 = driver1.Replace("Antonion", "Antonio");
+                }
+                if (driver2.Contains("Antonion"))
+                {
+                    driver2 = driver2.Replace("Antonion", "Antonio");
+                }
+
 
                 if (driver1.Contains("Jr."))
                 {
@@ -82,15 +103,27 @@ namespace FormulaCar.Championships.Importers.Fetchers
                     driver2 = driver2.Trim(' ');
                 }
 
+                if (driver1.Contains("R&auml;ikk&ouml;nen"))
+                {
+                    driver1 = driver1.Replace("R&auml;ikk&ouml;nen", "Raikkonen");
+                    driver1 = driver1.Trim(' ');
+                }
+                if (driver2.Contains("R&auml;ikk&ouml;nen"))
+                {
+                    driver2 = driver2.Replace("R&auml;ikk&ouml;nen", "Raikkonen");
+                    driver2 = driver2.Trim(' ');
+                }
+
+
                 bookingDtos.Add(new BookingDto()
                 {
-                    Season = 2022.ToString(),
+                    Season = _importSettings.Year.ToString(),
                     ConstructorName = team,
                     DriverName = driver1
                 });
                 bookingDtos.Add(new BookingDto()
                 {
-                    Season = 2022.ToString(),
+                    Season = _importSettings.Year.ToString(),
                     ConstructorName = team,
                     DriverName = driver2
                 });
@@ -103,6 +136,10 @@ namespace FormulaCar.Championships.Importers.Fetchers
 
 
             return bookingDtos;
+            }
+
+            return null;
         }
+        
     }
 }

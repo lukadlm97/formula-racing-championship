@@ -27,23 +27,20 @@ public class CircuitImporter : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         var exisitingCircuites = await _serviceManager.CircuiteService.GetAll();
-        if (exisitingCircuites != null && exisitingCircuites.Any())
-        {
-            _logger.LogInformation("Circuites exist!!!");
-            return;
-        }
+
 
         var circuites = await _circuitFetcher.GetCircuites();
         var uniqNamesOfCircuites = exisitingCircuites.Select(x => x.Name);
         foreach (var circuitDto in circuites)
         {
             if (uniqNamesOfCircuites.Contains(circuitDto.Name))
-            {
+
+    {
                 _logger.LogWarning(circuitDto.Name + " existing in DB");
                 continue;
             }
 
-            var countryId = await _serviceManager.CountryService.GetIdByCode(circuitDto.CountryCode);
+            var countryId = await _serviceManager.CountryService.GetIdByName(circuitDto.CountryCode);
             if (countryId == -1)
             {
                 _logger.LogWarning(circuitDto.Name + "[" + circuitDto.City + "]" +

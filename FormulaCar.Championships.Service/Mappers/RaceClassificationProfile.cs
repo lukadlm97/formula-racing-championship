@@ -13,7 +13,7 @@ namespace FormulaCar.Championships.Service.Mappers
     {
         public RaceClassificationProfile()
         {
-            CreateMap<RaceClassification, RaceResultItemDto>()
+            CreateMap<RaceClassification, RaceResultItemDto>().ForMember(dest=>dest.RaceClassifciationId,opt=>opt.MapFrom(src=>src.Id))
                 ;
             CreateMap<RaceResultItemForCreationDto, RaceClassification>();
         }

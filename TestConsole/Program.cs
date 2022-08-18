@@ -292,7 +292,8 @@ foreach (var grandPrix in singleGrandPrixs)
 }
 
 */
-
+//TODO: race result fetcher
+/*
 HttpClient client = new HttpClient();
 
 
@@ -346,6 +347,58 @@ foreach (var htmlNode in nodes)
 }
 
 Console.WriteLine(stringBuilder.ToString());
+*/
+
+
+
+HttpClient client = new HttpClient();
+
+
+var response = await client.GetAsync($"https://en.wikipedia.org/wiki/List_of_Formula_One_circuits");
+
+var responseContent = await response.Content.ReadAsStringAsync();
+
+if (response.IsSuccessStatusCode)
+{
+    //Console.WriteLine(responseContent);
+}
+
+HtmlDocument doc = new HtmlDocument();
+doc.LoadHtml(responseContent);
+
+var tables = doc.DocumentNode.Descendants("table").ToArray();
+var table = tables[2];
+
+var rows = table.Descendants("tr").ToList();
+var init = true;
+foreach (var htmlNode in rows)
+{
+    if (init)
+    {
+        init = false;
+        continue;
+    }
+    var columns = htmlNode.Descendants("td").ToArray();
+    if (columns.Length < 4)
+    {
+        var defaultColor = Console.ForegroundColor;
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine(htmlNode.InnerHtml);
+        Console.ForegroundColor = defaultColor;
+        continue;
+    }
+    var circuit = columns[0].Descendants("a").FirstOrDefault().InnerHtml;
+    var location = columns[4].Descendants("a").FirstOrDefault().InnerHtml;
+    var country = columns[4].Descendants("a").LastOrDefault().InnerHtml;
+    var race = columns[6].Descendants("a").FirstOrDefault().InnerHtml;
+  //  var length = double.Parse(columns[5].Descendants("a").FirstOrDefault().InnerHtml.Split(' ')[0]);
+    Console.WriteLine(circuit + " - " + location + " - " + country + " - " + race);
+}
+Console.WriteLine(table.InnerHtml);
+
+
+
+
 
 Console.WriteLine("press any key to close...");
 

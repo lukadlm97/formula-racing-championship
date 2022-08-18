@@ -47,7 +47,7 @@ namespace FormulaCar.Championships.Service
             var newRaceweek = _mapper.Map<Raceweek>(grandPrixForCreation);
             var selectedSeason = seasons.FirstOrDefault(x => x.Year.ToString() == grandPrixForCreation.Season);
             var circuit =
-                circutes.FirstOrDefault(x=>x.City.Contains(grandPrixForCreation.GrandPrixName.ToLower().Trim(' ')));
+                circutes.FirstOrDefault(x=>x.Name.Contains(grandPrixForCreation.GrandPrixName.ToLower().Trim(' ')));
 
             if (circuit == null || selectedSeason == null)
             {
@@ -73,7 +73,7 @@ namespace FormulaCar.Championships.Service
             var seasons = await _repositoryManager.SeasonRepository.FindAll();
             var selectedSeason = seasons.FirstOrDefault(x => x.Year.ToString() == season);
             var selectedCircuit =
-                circutes.FirstOrDefault(x => x.City.Contains(grandPrix.ToLower().Trim(' ')));
+                circutes.FirstOrDefault(x => x.Name.Contains(grandPrix.ToLower().Trim(' ')));
 
 
             if (selectedCircuit == null || selectedSeason == null)

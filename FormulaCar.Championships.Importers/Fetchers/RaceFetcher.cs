@@ -26,9 +26,9 @@ namespace FormulaCar.Championships.Importers.Fetchers
         public async Task<IEnumerable<RaceResultItemForCreationDto>> GetRaceResults(string grandPrix,int season)
         {
             HttpClient client = new HttpClient();
-            var mappedGradnPrix = _circuiteMapper.Values["Bahrain International Circuit"];
+            var mappedGradnPrix = _circuiteMapper.Values[grandPrix];
 
-            var response = await client.GetAsync($"https://www.fia.com/events/fia-formula-one-world-championship/season-2022/{mappedGradnPrix}/race-classification");
+            var response = await client.GetAsync($"https://www.fia.com/events/fia-formula-one-world-championship/season-{season}/{mappedGradnPrix}/race-classification");
 
             var responseContent = await response.Content.ReadAsStringAsync();
 
@@ -66,13 +66,19 @@ namespace FormulaCar.Championships.Importers.Fetchers
                     foreach (var driver in drivers)
                     {
                         var column = driver.Descendants("td").ToArray();
+                        var time = column[4].InnerHtml.ToString();
+                        if (string.IsNullOrWhiteSpace(time))
+                        {
+                            time = "0";
+                        }
                         var result = new RaceResultItemForCreationDto()
                         {
                             Driver = column[1].InnerHtml.ToString(),
                             Postion = column[0].InnerHtml.ToString(),
                             Laps = Int32.Parse(column[3].InnerHtml.ToString()),
-                            Time = TimeSpan.Parse(column[4].InnerHtml.ToString()),
-                            Raceweek = grandPrix+"-"+ season
+                            Time = TimeSpan.Parse(time),
+                            Circuite = grandPrix,
+                            Season = season
                         };
                         raceResultItemForCreationDtos.Add(result);
 

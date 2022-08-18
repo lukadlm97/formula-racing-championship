@@ -17,7 +17,7 @@ namespace FormulaCar.Championships.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.7")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -110,10 +110,6 @@ namespace FormulaCar.Championships.Persistence.Migrations
 
                     b.Property<int>("CountryId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Engine")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("FirstApperance")
                         .HasColumnType("datetime2");
@@ -551,7 +547,7 @@ namespace FormulaCar.Championships.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("FormulaCar.Championships.Domain.Entities.Position", "Position")
-                        .WithMany()
+                        .WithMany("Results")
                         .HasForeignKey("PositionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -657,6 +653,11 @@ namespace FormulaCar.Championships.Persistence.Migrations
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Driver", b =>
                 {
                     b.Navigation("Bookings");
+                });
+
+            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Position", b =>
+                {
+                    b.Navigation("Results");
                 });
 
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Raceweek", b =>

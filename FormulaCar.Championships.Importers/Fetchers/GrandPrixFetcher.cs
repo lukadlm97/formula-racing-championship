@@ -51,8 +51,9 @@ public class GrandPrixFetcher : IGrandPrixFetcher
 
             var columns = grandPrix.Descendants("td").ToArray();
             if (columns.Length != 3) continue;
-            var fullName = columns[1].Descendants("a").LastOrDefault().InnerHtml;
-            var city = fullName;
+            var splited = columns[1].Descendants("a").ToArray();
+            var fullName = splited[1].InnerHtml;
+          /*  var city = fullName;
             if (fullName.Contains(','))
             {
                 var parted = fullName.Split(',');
@@ -65,12 +66,12 @@ public class GrandPrixFetcher : IGrandPrixFetcher
             if (city.ToLower() == "Monte Carlo".ToLower()) city = "Monaco";
             if (city.ToLower() == "Sochi".ToLower()) city = "Aldersky";
             if (city.ToLower() == "Lusail".ToLower()) city = "Losail, Qatar";
-            Console.WriteLine(round + "   -   " + city);
+            Console.WriteLine(round + "   -   " + city);*/
             round++;
 
             var newGrandPrix = new GrandPrixForCreation
             {
-                GrandPrixName = city,
+                GrandPrixName = fullName,
                 No = round,
                 Season = _importSettings.Year
             };

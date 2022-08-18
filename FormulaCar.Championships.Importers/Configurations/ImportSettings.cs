@@ -8,5 +8,8 @@ public class ImportSettings
     public string DriversCsv { get; set; }
     public string Calendar { get; set; }
     public string Year { get; set; }
+    public string BookingsSourceUrl { get; set; }
+    public string RaceResult { get; set; }
+    
 
 }
