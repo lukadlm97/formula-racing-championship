@@ -86,19 +86,19 @@ namespace FormulaCar.Championships.Service
                     firstName = "Alex";
                 }
             }
-            selectedDriver = (await _repositoryManager.DriverRepository.FindByCondition(x =>
-                x.FirstName.ToLower() == firstName.ToLower() && x.LastName.ToLower() == lastName.ToLower())).FirstOrDefault();
-            var selectedBooking = (await _repositoryManager.BookingRepository.FindByCondition(x =>
-                x.DriverId == selectedDriver.Id && x.IsActive)).FirstOrDefault();
-            var selectedCircuite = (
-                await _repositoryManager.CircuiteRepository.FindByCondition(x =>
-                    x.Name.ToLower() == raceResultItemForCreationDto.Circuite.ToLower())).FirstOrDefault();
             var selectedSeason =
                 (await _repositoryManager.SeasonRepository.FindByCondition(x =>
                     x.Year.ToString().ToLower() == raceResultItemForCreationDto.Season.ToString())).FirstOrDefault();
+            selectedDriver = (await _repositoryManager.DriverRepository.FindByCondition(x =>
+                x.FirstName.ToLower() == firstName.ToLower() && x.LastName.ToLower() == lastName.ToLower())).FirstOrDefault();
+            var selectedBooking = (await _repositoryManager.BookingRepository.FindByCondition(x =>
+                x.DriverId == selectedDriver.Id && x.IsActive && x.SeasonId==selectedSeason.Id)).FirstOrDefault();
+            var selectedCircuite = (
+                await _repositoryManager.CircuiteRepository.FindByCondition(x =>
+                    x.Name.ToLower() == raceResultItemForCreationDto.Circuite.ToLower())).FirstOrDefault();
             var selectedRaceweek = (await _repositoryManager.RaceweekRepository.FindByCondition(x =>
                 x.CircuiteId == selectedCircuite.Id && x.SeasonId ==
-                selectedSeason.Id)).FirstOrDefault();
+                selectedSeason.Id)).OrderBy(x => x.OrderNumber).LastOrDefault();
 
             if (selectedRaceweek == null || selectedPosition == null || selectedBooking == null)
             {
@@ -141,19 +141,20 @@ namespace FormulaCar.Championships.Service
                     firstName = "Alex";
                 }
             }
-            selectedDriver = (await _repositoryManager.DriverRepository.FindByCondition(x =>
-                x.FirstName.ToLower() == firstName.ToLower() && x.LastName.ToLower() == lastName.ToLower())).FirstOrDefault();
-            var selectedBooking = (await _repositoryManager.BookingRepository.FindByCondition(x =>
-                x.DriverId == selectedDriver.Id && x.IsActive)).FirstOrDefault();
-            var selectedCircuite =(
-                await _repositoryManager.CircuiteRepository.FindByCondition(x =>
-                    x.Name.ToLower() == circuit)).FirstOrDefault();
             var selectedSeason =
                 (await _repositoryManager.SeasonRepository.FindByCondition(x =>
                     x.Year.ToString().ToLower() == season)).FirstOrDefault();
+            selectedDriver = (await _repositoryManager.DriverRepository.FindByCondition(x =>
+                x.FirstName.ToLower() == firstName.ToLower() && x.LastName.ToLower() == lastName.ToLower())).FirstOrDefault();
+            var selectedBooking = (await _repositoryManager.BookingRepository.FindByCondition(x =>
+                x.DriverId == selectedDriver.Id && x.IsActive&&x.SeasonId==selectedSeason.Id)).FirstOrDefault();
+            var selectedCircuite =(
+                await _repositoryManager.CircuiteRepository.FindByCondition(x =>
+                    x.Name.ToLower() == circuit)).FirstOrDefault();
+           
             var selectedRaceweek = (await _repositoryManager.RaceweekRepository.FindByCondition(x =>
                 x.CircuiteId == selectedCircuite.Id && x.SeasonId ==
-                selectedSeason.Id)).FirstOrDefault();
+                selectedSeason.Id)).OrderBy(x=>x.OrderNumber).LastOrDefault();
 
 
             if (selectedPosition == null || selectedBooking == null || selectedRaceweek == null)

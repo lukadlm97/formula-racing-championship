@@ -103,6 +103,38 @@ namespace FormulaCar.Championships.Service
             return bookings.Any(x => x.ConstructorId == selectedConstructor.Id && x.SeasonId == selectedSeason.Id);
         }
 
+        public async Task<IEnumerable<BookingDto>> GetBookingsBySeason(string season)
+        {
+            var seasons =
+                await _repositoryManager.SeasonRepository.FindByCondition(x => x.Year.ToString() == season);
+            var targetSeason = seasons.FirstOrDefault();
+            if (targetSeason == null)
+            {
+                throw new ItemNotFoundException(-1);
+            }
+            var drivers = await _repositoryManager.DriverRepository.FindAll();
+            var constructor = await _repositoryManager.ConstructorRepository.FindAll();
+
+            var bookings =
+                await _repositoryManager.BookingRepository.FindByCondition(x => x.SeasonId == targetSeason.Id);
+
+            List<BookingDto> bookingDtos = new List<BookingDto>();
+            foreach (var booking in bookings)
+            {
+                var selectedConstructor = constructor.FirstOrDefault(x => x.Id == booking.ConstructorId);
+                var selectedDriver = drivers.FirstOrDefault(x => x.Id == booking.DriverId);
+                var newBooking = new BookingDto()
+                {
+                    Season = targetSeason.Year.ToString(),
+                    ConstructorName = selectedConstructor.Name,
+                    DriverName = selectedDriver.FirstName + " " + selectedDriver.LastName
+                };
+                bookingDtos.Add(newBooking);
+            }
+
+            return bookingDtos;
+        }
+
 
         async Task<Constructor> FindConstructor(string constructorName)
         {

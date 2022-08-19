@@ -33,7 +33,7 @@ namespace FormulaCar.Championships.Importers.Services
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             var season = Int32.Parse(_importSettings.Year);
-            var grandPrix = "Bahrain International Circuit";
+            var grandPrix = "Yas Marina Circuit";
             var results = await _raceFetcher.GetRaceResults(grandPrix, season);
 
 
@@ -42,6 +42,10 @@ namespace FormulaCar.Championships.Importers.Services
             foreach (var item in results)
             {
                 item.Season = season;
+                if (grandPrix.Contains('1'))
+                {
+                    grandPrix = grandPrix.Split('1')[0].Trim(' ');
+                }
                 item.Circuite = grandPrix;
                 if (await _serviceManager.RaceClassificationService.Exist(item.Driver, item.Circuite,
                         item.Season.ToString(), item.Postion))

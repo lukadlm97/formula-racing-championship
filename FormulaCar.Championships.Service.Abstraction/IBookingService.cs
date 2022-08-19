@@ -12,5 +12,6 @@ namespace FormulaCar.Championships.Service.Abstraction
         Task<IEnumerable<BookingDto>> GetAll();
         Task<BookingDto> Create(BookingForCreationDto bookingForCreationDto);
         Task<bool> Exist(string driver, string constructor, string season);
+        Task<IEnumerable<BookingDto>> GetBookingsBySeason( string season);
     }
 }
