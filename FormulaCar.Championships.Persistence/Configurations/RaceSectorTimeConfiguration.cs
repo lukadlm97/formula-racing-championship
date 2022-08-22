@@ -9,6 +9,5 @@ public class RaceSectorTimeConfiguration : IEntityTypeConfiguration<RaceSectorTi
     public void Configure(EntityTypeBuilder<RaceSectorTime> builder)
     {
         builder.ToTable("RaceSectorTimes");
-        builder.HasOne(raceSectorTime => raceSectorTime.Sector);
     }
 }

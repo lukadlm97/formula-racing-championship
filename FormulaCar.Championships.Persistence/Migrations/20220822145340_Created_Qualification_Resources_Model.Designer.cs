@@ -4,6 +4,7 @@ using FormulaCar.Championships.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FormulaCar.Championships.Persistence.Migrations
 {
     [DbContext(typeof(RepositoryDbContext))]
-    partial class RepositoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220822145340_Created_Qualification_Resources_Model")]
+    partial class Created_Qualification_Resources_Model
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

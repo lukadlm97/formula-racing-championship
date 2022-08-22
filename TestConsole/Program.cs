@@ -399,9 +399,8 @@ Console.WriteLine(table.InnerHtml);
 
 
 
-*/
 
-
+//TODO : PIT STOP FETCHING
 
 HttpClient client = new HttpClient();
 
@@ -469,8 +468,86 @@ foreach (var htmlNode in nodes)
     }
 
 }
+*/
 
 
+HttpClient client = new HttpClient();
+
+
+var response = await client.GetAsync($"https://www.fia.com/events/fia-formula-one-world-championship/season-2022/bahrain-grand-prix/race-classification");
+
+var responseContent = await response.Content.ReadAsStringAsync();
+
+if (response.IsSuccessStatusCode)
+{
+    //Console.WriteLine(responseContent);
+}
+
+
+HtmlDocument doc = new HtmlDocument();
+doc.LoadHtml(responseContent);
+
+var nodes = doc.DocumentNode.Descendants("table").Where(x => x.Attributes["class"].Value == "sticky-enabled").ToList();
+
+StringBuilder stringBuilder = new StringBuilder();
+foreach (var htmlNode in nodes)
+{
+    var tableType = htmlNode.Descendants("th").Where(x => x.Attributes["class"].Value == "table-head").SingleOrDefault();
+    Console.WriteLine(tableType.InnerHtml);
+
+    if (//tableType.InnerHtml.ToLower() == "RACE - BEST SECTOR TIMES".ToLower() ||
+          tableType.InnerHtml.ToLower() == "RACE - PIT STOP - SUMMARY".ToLower() ||
+        tableType.InnerHtml.ToLower() == "QUALIFYING - BEST SECTOR TIMES".ToLower() ||
+        tableType.InnerHtml.ToLower() == "QUALIFYING - MAXIMUM SPEEDS".ToLower() ||
+        tableType.InnerHtml.ToLower() == "RACE - MAXIMUM SPEEDS".ToLower())
+    {
+        continue;
+    }
+    if (tableType.InnerHtml.ToLower() == "RACE - BEST SECTOR TIMES".ToLower())
+    {
+
+        var tableContent = htmlNode.Descendants($"tbody").SingleOrDefault();
+        var drivers = tableContent.Descendants("tr").Skip(1).ToList();
+        var position = 0;
+        var init = true;
+        foreach (var driver in drivers)
+        {
+            if (init)
+            {
+                init = false;
+                continue;
+                
+            }
+            position++;
+            var column = driver.Descendants("td").ToArray();
+            var pos = column[0].InnerHtml.ToString();
+            var name = column[1].InnerHtml.ToString().Split('.')[1].Trim(' ');
+            var rawTime = column[2].InnerHtml.ToString();
+            var sector = 1;
+            rawTime = "0:0:" + rawTime;
+            var totalTime = TimeSpan.Parse(rawTime);
+            var report = $"{pos}. {name}  -   [totalTime:{totalTime}]";
+            Console.WriteLine(report);
+             name = column[3].InnerHtml.ToString().Split('.')[1].Trim(' ');
+             rawTime = column[4].InnerHtml.ToString();
+             sector++;
+             rawTime = "0:0:" + rawTime;
+            totalTime = TimeSpan.Parse(rawTime);
+             report = $"{pos}. {name}  -   [totalTime:{totalTime}]";
+             Console.WriteLine(report);
+             name = column[5].InnerHtml.ToString().Split('.')[1].Trim(' ');
+             rawTime = column[6].InnerHtml.ToString();
+             sector++;
+             rawTime = "0:0:" + rawTime;
+            totalTime = TimeSpan.Parse(rawTime);
+             report = $"{pos}. {name}  -   [totalTime:{totalTime}]";
+             Console.WriteLine(report);
+
+
+        }
+    }
+
+}
 Console.WriteLine("press any key to close...");
 
 Console.ReadLine();

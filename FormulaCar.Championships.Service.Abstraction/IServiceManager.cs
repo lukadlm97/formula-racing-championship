@@ -1,6 +1,4 @@
-﻿using FormulaCar.Championships.Domain.Repositories;
-
-namespace FormulaCar.Championships.Service.Abstraction;
+﻿namespace FormulaCar.Championships.Service.Abstraction;
 
 public interface IServiceManager
 {
@@ -10,11 +8,13 @@ public interface IServiceManager
     ICountryService CountryService { get; }
     ICircuiteService CircuiteService { get; }
     IDriverService DriverService { get; }
-    IConstructorService ConstructorService { get; } 
+    IConstructorService ConstructorService { get; }
     IBookingService BookingService { get; }
     IRaceweekService RaceweekService { get; }
     IRaceClassificationService RaceClassificationService { get; }
     IFastestLapService FastestLapService { get; }
     IRaceSpeedTrapService RaceSpeedTrapService { get; }
     IRacePitStopService RacePitStopService { get; }
+    IRaceBestSectorService RaceBestSectorService { get; }
+    IRaceMaximumSpeedService RaceMaximumSpeedService { get; }
 }

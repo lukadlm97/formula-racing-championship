@@ -23,6 +23,8 @@ public sealed class RepositoryDbContext : DbContext
     public DbSet<RaceSpeedTrap> RaceSpeedTraps { get; set; }
     public DbSet<RaceFastesLap> RaeFastesLaps { get; set; }
     public DbSet<RaceMaximumSpeed> RaceMaximumSpeeds { get; set; }
+    public DbSet<QualificationPeriod> QualificationPeriods { get; set; }
+    public DbSet<QualificationClassification> QualificationClassifications { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

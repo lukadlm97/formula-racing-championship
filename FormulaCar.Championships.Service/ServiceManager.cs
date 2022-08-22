@@ -20,6 +20,8 @@ public class ServiceManager : IServiceManager
     private readonly Lazy<IFastestLapService> _lazyFastestLapService;
     private readonly Lazy<IRaceSpeedTrapService> _lazyRaceSpeedTrapService;
     private readonly Lazy<IRacePitStopService> _lazyRacePitStopService;
+    private readonly Lazy<IRaceBestSectorService> _lazyRaceBestSectorService;
+    private readonly Lazy<IRaceMaximumSpeedService> _lazyRaceMaximumSpeedService;
     private readonly IMapper _mapper;
 
     public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper)
@@ -39,6 +41,8 @@ public class ServiceManager : IServiceManager
         _lazyFastestLapService = new Lazy<IFastestLapService>(() => new RaceFastestLapService(repositoryManager, _mapper));
         _lazyRacePitStopService = new Lazy<IRacePitStopService>(() => new RacePitStopService(repositoryManager, _mapper));
         _lazyRaceSpeedTrapService = new Lazy<IRaceSpeedTrapService>(() => new RaceSpeedTrapService(repositoryManager, _mapper));
+        _lazyRaceBestSectorService = new Lazy<IRaceBestSectorService>(() => new RaceBestSectorService(repositoryManager, _mapper));
+        _lazyRaceMaximumSpeedService = new Lazy<IRaceMaximumSpeedService>(() => new RaceMaximumSpeedService(repositoryManager, _mapper));
     }
 
     public IPositionService PositionService => _lazyPositionService.Value;
@@ -54,4 +58,6 @@ public class ServiceManager : IServiceManager
     public IFastestLapService FastestLapService => _lazyFastestLapService.Value;
     public IRaceSpeedTrapService RaceSpeedTrapService => _lazyRaceSpeedTrapService.Value;
     public IRacePitStopService RacePitStopService => _lazyRacePitStopService.Value;
+    public IRaceBestSectorService RaceBestSectorService => _lazyRaceBestSectorService.Value;
+    public IRaceMaximumSpeedService RaceMaximumSpeedService => _lazyRaceMaximumSpeedService.Value;
 }

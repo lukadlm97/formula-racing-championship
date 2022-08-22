@@ -2,6 +2,6 @@
 
 public class RaceMaximumSpeed : Result
 {
-    public int MaxAvgSpeed { get; set; }
-    public Sector Sector { get; set; }
+    public double MaxAvgSpeed { get; set; }
+    public int SectorId { get; set; }
 }

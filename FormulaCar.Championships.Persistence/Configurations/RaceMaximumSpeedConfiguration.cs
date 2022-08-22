@@ -9,6 +9,5 @@ public class RaceMaximumSpeedConfiguration : IEntityTypeConfiguration<RaceMaximu
     public void Configure(EntityTypeBuilder<RaceMaximumSpeed> builder)
     {
         builder.ToTable("RaceMaximumSpeeds");
-        builder.HasOne(raceMaximumSpeed => raceMaximumSpeed.Sector);
     }
 }

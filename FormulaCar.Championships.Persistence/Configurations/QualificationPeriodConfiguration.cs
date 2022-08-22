@@ -11,5 +11,6 @@ public class QualificationPeriodConfiguration : IEntityTypeConfiguration<Qualifi
         builder.ToTable("QualificationPeriods");
         builder.HasKey(qualificationPeriod => qualificationPeriod.Id);
         builder.Property(qualificationPeriod => qualificationPeriod.Id).ValueGeneratedOnAdd();
+        builder.HasMany(x => x.QualificationClassifications).WithOne().HasForeignKey(x => x.QualificationPeriodId);
     }
 }

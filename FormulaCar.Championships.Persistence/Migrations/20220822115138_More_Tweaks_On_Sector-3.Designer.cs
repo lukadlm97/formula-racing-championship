@@ -4,6 +4,7 @@ using FormulaCar.Championships.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FormulaCar.Championships.Persistence.Migrations
 {
     [DbContext(typeof(RepositoryDbContext))]
-    partial class RepositoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220822115138_More_Tweaks_On_Sector-3")]
+    partial class More_Tweaks_On_Sector3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -358,64 +360,6 @@ namespace FormulaCar.Championships.Persistence.Migrations
                     b.ToTable("Sectors", (string)null);
                 });
 
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.QualificationBestSectorTimes", b =>
-                {
-                    b.HasBaseType("FormulaCar.Championships.Domain.Entities.Result");
-
-                    b.Property<int>("SectorId")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("Time")
-                        .HasColumnType("time");
-
-                    b.HasIndex("SectorId");
-
-                    b.ToTable("QualificationBestSectorTimes", (string)null);
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.QualificationClassification", b =>
-                {
-                    b.HasBaseType("FormulaCar.Championships.Domain.Entities.Result");
-
-                    b.Property<int>("Laps")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QualificationPeriodId")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("Time")
-                        .HasColumnType("time");
-
-                    b.HasIndex("QualificationPeriodId");
-
-                    b.ToTable("QualificationClassifications", (string)null);
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.QualificationMaximumSpeed", b =>
-                {
-                    b.HasBaseType("FormulaCar.Championships.Domain.Entities.Result");
-
-                    b.Property<double>("MaxAvgSpeed")
-                        .HasColumnType("float");
-
-                    b.Property<int>("SectorId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("SectorId");
-
-                    b.ToTable("QualificationMaximumSpeeds", (string)null);
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.QualificationSpeedTrap", b =>
-                {
-                    b.HasBaseType("FormulaCar.Championships.Domain.Entities.Result");
-
-                    b.Property<double>("MaxSpeed")
-                        .HasColumnType("float");
-
-                    b.ToTable("QualificationSpeedTraps", (string)null);
-                });
-
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.RaceClassification", b =>
                 {
                     b.HasBaseType("FormulaCar.Championships.Domain.Entities.Result");
@@ -455,8 +399,8 @@ namespace FormulaCar.Championships.Persistence.Migrations
                 {
                     b.HasBaseType("FormulaCar.Championships.Domain.Entities.Result");
 
-                    b.Property<double>("MaxAvgSpeed")
-                        .HasColumnType("float");
+                    b.Property<int>("MaxAvgSpeed")
+                        .HasColumnType("int");
 
                     b.Property<int>("SectorId")
                         .HasColumnType("int");
@@ -619,60 +563,6 @@ namespace FormulaCar.Championships.Persistence.Migrations
                     b.Navigation("Position");
                 });
 
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.QualificationBestSectorTimes", b =>
-                {
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Result", null)
-                        .WithOne()
-                        .HasForeignKey("FormulaCar.Championships.Domain.Entities.QualificationBestSectorTimes", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Sector", null)
-                        .WithMany("QualificationBestSectorTimes")
-                        .HasForeignKey("SectorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.QualificationClassification", b =>
-                {
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Result", null)
-                        .WithOne()
-                        .HasForeignKey("FormulaCar.Championships.Domain.Entities.QualificationClassification", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.QualificationPeriod", null)
-                        .WithMany("QualificationClassifications")
-                        .HasForeignKey("QualificationPeriodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.QualificationMaximumSpeed", b =>
-                {
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Result", null)
-                        .WithOne()
-                        .HasForeignKey("FormulaCar.Championships.Domain.Entities.QualificationMaximumSpeed", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Sector", null)
-                        .WithMany("QualificationMaximumSpeeds")
-                        .HasForeignKey("SectorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.QualificationSpeedTrap", b =>
-                {
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Result", null)
-                        .WithOne()
-                        .HasForeignKey("FormulaCar.Championships.Domain.Entities.QualificationSpeedTrap", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.RaceClassification", b =>
                 {
                     b.HasOne("FormulaCar.Championships.Domain.Entities.Result", null)
@@ -768,11 +658,6 @@ namespace FormulaCar.Championships.Persistence.Migrations
                     b.Navigation("Results");
                 });
 
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.QualificationPeriod", b =>
-                {
-                    b.Navigation("QualificationClassifications");
-                });
-
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Raceweek", b =>
                 {
                     b.Navigation("Results");
@@ -787,10 +672,6 @@ namespace FormulaCar.Championships.Persistence.Migrations
 
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Sector", b =>
                 {
-                    b.Navigation("QualificationBestSectorTimes");
-
-                    b.Navigation("QualificationMaximumSpeeds");
-
                     b.Navigation("RaceMaximumSpeeds");
 
                     b.Navigation("RaceSectorTimes");

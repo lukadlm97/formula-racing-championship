@@ -11,5 +11,9 @@ public class SectorConfiguration : IEntityTypeConfiguration<Sector>
         builder.ToTable("Sectors");
         builder.HasKey(sector => sector.Id);
         builder.Property(sector => sector.Id).ValueGeneratedOnAdd();
+        builder.HasMany(x => x.RaceSectorTimes).WithOne().HasForeignKey(x => x.SectorId);
+        builder.HasMany(x => x.RaceMaximumSpeeds).WithOne().HasForeignKey(x => x.SectorId);
+        builder.HasMany(x => x.QualificationBestSectorTimes).WithOne().HasForeignKey(x => x.SectorId);
+        builder.HasMany(x => x.QualificationMaximumSpeeds).WithOne().HasForeignKey(x => x.SectorId);
     }
 }

@@ -17,5 +17,11 @@ public interface IRepositoryManager
     IRaceweekRepository RaceweekRepository { get; }
     ISeasonRepository SeasonRepository { get; }
     ISectorRepository SectorRepository { get; }
+    IRaceBestSectorsRepository BestSectorsRepository { get; }
+    IRaceMaximumSpeedsRepository RaceMaximumSpeedsRepository { get; }
+    IQualificationClassificationRepository QualificationClassificationRepository { get; }
+    IQualificationBestSectorTimesRepository QualificationBestSectorTimesRepository { get; }
+    IQualificationMaximumSpeedRepository QualificationMaximumSpeedRepository { get; }
+    IQualificationSpeedTrapRepository QualificationSpeedTrapRepository { get; }
     IUnitOfWork UnitOfWork { get; }
 }
