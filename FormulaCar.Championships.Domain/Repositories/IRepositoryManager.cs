@@ -11,6 +11,9 @@ public interface IRepositoryManager
     IPositionRepository PositionRepository { get; }
     IQualificationPeriodsRepository QualificationPeriodsRepository { get; }
     IRaceClassificationRepository RaceClassificationRepository { get; }
+    IRaceFastesLapRepository RaceFastesLapRepository { get; }
+    IRaceSpeedTrapRepository RaceSpeedTrapRepository { get; }
+    IRacePitStop RacePitStop { get; }
     IRaceweekRepository RaceweekRepository { get; }
     ISeasonRepository SeasonRepository { get; }
     ISectorRepository SectorRepository { get; }

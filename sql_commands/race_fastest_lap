@@ -1,0 +1,23 @@
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP (1000) rfl.[Id]
+      ,[LapTime]
+      ,[Lap]
+      ,[Gap]
+      ,[AvgSpeed]
+      ,[RegistrationTime]
+	  ,d.FirstName
+	  ,d.LastName,
+	  c.Name
+	  ,p.Rank
+	  ,cc.Name
+	  ,s.Year
+	  ,rw.OrderNumber
+  FROM [formula-racing].[dbo].[RaceFastesLaps] rfl
+  join Result r on rfl.Id=r.Id
+  join Bookings b on r.BookingId=b.Id
+  join Drivers d on b.DriverId=d.Id
+  join Constructors c on b.ConstructorId=c.Id
+  join Raceweeks rw on r.RaceweekId=rw.Id
+  join Circuites cc on rw.CircuiteId=cc.Id
+  join Positions p on r.PositionId=p.Id
+  join Seasons s on b.SeasonId=s.Id

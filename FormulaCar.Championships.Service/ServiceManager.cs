@@ -17,6 +17,9 @@ public class ServiceManager : IServiceManager
     private readonly Lazy<IBookingService> _lazyBookingService;
     private readonly Lazy<IRaceweekService> _lazyRaceweekService;
     private readonly Lazy<IRaceClassificationService> _lazyRaceClassificationService;
+    private readonly Lazy<IFastestLapService> _lazyFastestLapService;
+    private readonly Lazy<IRaceSpeedTrapService> _lazyRaceSpeedTrapService;
+    private readonly Lazy<IRacePitStopService> _lazyRacePitStopService;
     private readonly IMapper _mapper;
 
     public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper)
@@ -33,6 +36,9 @@ public class ServiceManager : IServiceManager
         _lazyBookingService = new Lazy<IBookingService>(() => new BookingService(repositoryManager, _mapper));
         _lazyRaceweekService = new Lazy<IRaceweekService>(() => new RaceweekService(repositoryManager, _mapper));
         _lazyRaceClassificationService = new Lazy<IRaceClassificationService>(() => new RaceClassificationService(repositoryManager, _mapper));
+        _lazyFastestLapService = new Lazy<IFastestLapService>(() => new RaceFastestLapService(repositoryManager, _mapper));
+        _lazyRacePitStopService = new Lazy<IRacePitStopService>(() => new RacePitStopService(repositoryManager, _mapper));
+        _lazyRaceSpeedTrapService = new Lazy<IRaceSpeedTrapService>(() => new RaceSpeedTrapService(repositoryManager, _mapper));
     }
 
     public IPositionService PositionService => _lazyPositionService.Value;
@@ -45,4 +51,7 @@ public class ServiceManager : IServiceManager
     public IBookingService BookingService => _lazyBookingService.Value;
     public IRaceweekService RaceweekService => _lazyRaceweekService.Value;
     public IRaceClassificationService RaceClassificationService => _lazyRaceClassificationService.Value;
+    public IFastestLapService FastestLapService => _lazyFastestLapService.Value;
+    public IRaceSpeedTrapService RaceSpeedTrapService => _lazyRaceSpeedTrapService.Value;
+    public IRacePitStopService RacePitStopService => _lazyRacePitStopService.Value;
 }

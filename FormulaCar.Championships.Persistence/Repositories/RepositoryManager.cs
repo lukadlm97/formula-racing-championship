@@ -16,6 +16,9 @@ public class RepositoryManager : IRepositoryManager
     private readonly Lazy<IRaceweekRepository> _lazyRaceweekRepository;
     private readonly Lazy<ISeasonRepository> _lazySeasonRepository;
     private readonly Lazy<ISectorRepository> _lazySectorRepository;
+    private readonly Lazy<IRaceFastesLapRepository> _lazyFastestLapRepository;
+    private readonly Lazy<IRacePitStop> _lazyPitStopRepository;
+    private readonly Lazy<IRaceSpeedTrapRepository> _lazyRaceSpeedTrapRepository;
     private readonly Lazy<IUnitOfWork> _lazyUnitOfWork;
 
     public RepositoryManager(RepositoryDbContext repositoryDbContext)
@@ -34,6 +37,11 @@ public class RepositoryManager : IRepositoryManager
         _lazyRaceweekRepository = new Lazy<IRaceweekRepository>(() => new RaceweekRepository(repositoryDbContext));
         _lazySeasonRepository = new Lazy<ISeasonRepository>(() => new SeasonRepository(repositoryDbContext));
         _lazySectorRepository = new Lazy<ISectorRepository>(() => new SectorsRepository(repositoryDbContext));
+        _lazyFastestLapRepository = new Lazy<IRaceFastesLapRepository>(() => new RaceFastestLapRepository(repositoryDbContext));
+        _lazyPitStopRepository = new Lazy<IRacePitStop>(() => new RacePitStopRepository(repositoryDbContext));
+        _lazyRaceSpeedTrapRepository = new Lazy<IRaceSpeedTrapRepository>(() => new RaceSpeedTrapRepository(repositoryDbContext));
+        _lazySectorRepository = new Lazy<ISectorRepository>(() => new SectorsRepository(repositoryDbContext));
+        _lazySectorRepository = new Lazy<ISectorRepository>(() => new SectorsRepository(repositoryDbContext));
         _lazyUnitOfWork = new Lazy<IUnitOfWork>(() => new UnitOfWork(repositoryDbContext));
     }
 
@@ -47,6 +55,9 @@ public class RepositoryManager : IRepositoryManager
     public IPositionRepository PositionRepository => _lazyPositionRepository.Value;
     public IQualificationPeriodsRepository QualificationPeriodsRepository { get; }
     public IRaceClassificationRepository RaceClassificationRepository => _lazyRaceClassificationRepository.Value;
+    public IRaceFastesLapRepository RaceFastesLapRepository => _lazyFastestLapRepository.Value;
+    public IRaceSpeedTrapRepository RaceSpeedTrapRepository => _lazyRaceSpeedTrapRepository.Value;
+    public IRacePitStop RacePitStop => _lazyPitStopRepository.Value;
     public IRaceweekRepository RaceweekRepository => _lazyRaceweekRepository.Value;
     public ISeasonRepository SeasonRepository => _lazySeasonRepository.Value;
     public ISectorRepository SectorRepository => _lazySectorRepository.Value;
