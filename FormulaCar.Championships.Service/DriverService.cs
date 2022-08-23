@@ -20,7 +20,7 @@ public class DriverService : IDriverService
     public async Task<IEnumerable<DriverDto>> GetDrivers()
     {
         var driverDtos = new List<DriverDto>();
-        var drivers = await _repositoryManager.DriverRepository.FindByCondition(x=>x.IsActive==true);
+        var drivers = await _repositoryManager.DriverRepository.FindByCondition(x => x.IsActive == true);
         if (!drivers.Any()) return driverDtos;
 
         var countries = await _repositoryManager.CountryRepository.FindAll();
@@ -161,7 +161,7 @@ public class DriverService : IDriverService
                 break;
             case "Monegasque":
                 country = countries.FirstOrDefault(x => x.Code.ToLower().Contains("MCO".ToLower()));
-                break; 
+                break;
             case "Thai":
                 country = countries.FirstOrDefault(x => x.Code.ToLower().Contains("THA".ToLower()));
                 break;

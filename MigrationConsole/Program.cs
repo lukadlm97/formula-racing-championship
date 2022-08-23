@@ -56,6 +56,9 @@ static IHostBuilder CreateHostBuilder(string[] args)
             services.AddSingleton<IRaceMaximumSpeedFetcher, RaceMaximumSpeedFetcher>();
             services.AddSingleton<IRaceBestSectorTimesFetcher, RaceBestSectorTimesFetcher>();
             services.AddSingleton<IQualificationClassificationFetcher, QualificationClassificationFetcher>();
+            services.AddSingleton<IQualificationSpeedTrapFetcher, QualificationSpeedTrapFetcher>();
+            services.AddSingleton<IQualificationBestSectorTimeFetcher, QualificationBestSectorTimesFetcher>();
+            services.AddSingleton<IQualificationMaximumSpeedFetcher, QualificationMaximumSpeedFetcher>();
             services.AddSingleton<IRaceFetcher, RaceFetcher>();
             var importConfig = configuration.GetSection("ImporterConfiguration");
             var mapperConfig = configuration.GetSection("FiaTeamsMapping");
@@ -67,7 +70,7 @@ static IHostBuilder CreateHostBuilder(string[] args)
             {
                 client.BaseAddress = new Uri(configuration["ImporterConfiguration:CircuiteSourceUrl"]);
             });
-            services.AddHostedService<QualificationClassificationImporter>();
+            services.AddHostedService<QualificationMaximumSpeedImporter>();
         }).ConfigureLogging(loggingBuilder =>
         {
             var configuration = new ConfigurationBuilder()

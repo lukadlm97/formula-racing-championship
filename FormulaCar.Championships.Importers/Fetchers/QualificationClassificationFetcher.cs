@@ -29,21 +29,33 @@ namespace FormulaCar.Championships.Importers.Fetchers
             var mappedGradnPrix = _circuiteMapper.Values[grandPrix];
 
             var response = await client.GetAsync($"https://www.fia.com/events/fia-formula-one-world-championship/season-{season}/{mappedGradnPrix}/qualifying-classification");
-
-            var responseContent = await response.Content.ReadAsStringAsync();
+            
 
             if (!response.IsSuccessStatusCode)
             {
-                return null;
+                response = await client.GetAsync($"https://www.fia.com/events/fia-formula-one-world-championship/season-{season}/{mappedGradnPrix}/qualifying");
+
+                if(!response.IsSuccessStatusCode)
+                    return null;
+                
             }
 
+            var responseContent = await response.Content.ReadAsStringAsync();
             List<QualificationClassificationForCreationDto> qualificationClassifications = new List<QualificationClassificationForCreationDto>();
 
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(responseContent);
+            List<HtmlNode> nodes;
+            try
+            {
+                 nodes = doc.DocumentNode.Descendants("table").Where(x => x.Attributes["class"].Value == "sticky-enabled").ToList();
 
-            var nodes = doc.DocumentNode.Descendants("table").Where(x => x.Attributes["class"].Value == "sticky-enabled").ToList();
-
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
+            
             foreach (var htmlNode in nodes)
             {
                 var tableType = htmlNode.Descendants("th").Where(x => x.Attributes["class"].Value == "table-head").SingleOrDefault();
@@ -71,6 +83,10 @@ namespace FormulaCar.Championships.Importers.Fetchers
                         var name = column[1].InnerHtml.ToString();
                         var rawTime = column[2].InnerHtml.ToString();
                         var sector = 1;
+                        if (string.IsNullOrWhiteSpace(rawTime))
+                        {
+                            rawTime = "0:0.000";
+                        }
                         rawTime = "0:" + rawTime;
                         var totalTime = TimeSpan.Parse(rawTime);
                         var preform = new QualificationClassificationForCreationDto()
@@ -83,7 +99,8 @@ namespace FormulaCar.Championships.Importers.Fetchers
                             Laps = int.Parse(column[3].InnerHtml.ToString())
                         };
                      
-                        qualificationClassifications.Add(preform); if (string.IsNullOrWhiteSpace(column[4].InnerHtml.ToString()))
+                        qualificationClassifications.Add(preform);
+                        if (string.IsNullOrWhiteSpace(column[4].InnerHtml.ToString()))
                         {
                             continue;
                         }
@@ -115,7 +132,7 @@ namespace FormulaCar.Championships.Importers.Fetchers
                             Driver = name,
                             Circuite = grandPrix,
                             Time = totalTime,
-                            QualificationPeriod = "Q2",
+                            QualificationPeriod = "Q3",
                             Laps = int.Parse(column[7].InnerHtml.ToString())
                         };
                         qualificationClassifications.Add(preform);

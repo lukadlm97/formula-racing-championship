@@ -51,23 +51,24 @@ namespace FormulaCar.Championships.Importers.Services
                 }
                 foreach (var sectorTime in result)
                 {
-                    /*
-                    if (await _serviceManager.RaceBestSectorService.Exist(sectorTime.Driver, sectorTime.Circuite,
-                            _importSettings.Year, sectorTime.Position, sector))
+                    if (await _serviceManager.QualificationClassificationService.Exist(sectorTime.Driver, sectorTime.Circuite,
+                            _importSettings.Year, sectorTime.Position, int.Parse(sectorTime.QualificationPeriod[1].ToString())))
                     {
-                        _logger.LogWarning($"Exist sector time for:{sectorTime.Postion}||| {sectorTime.Driver}. {sectorTime.Circuite}     {_importSettings.Year}");
+                        _logger.LogWarning($"Exist sector time for:{sectorTime.Position}||| {sectorTime.Driver}. {sectorTime.Circuite}     {_importSettings.Year}");
 
                         continue;
                     }
-                    var createdFastestLap = await _serviceManager.RaceBestSectorService.Create(sectorTime);
-                    if (createdFastestLap == null)
+
+                    sectorTime.Season = _importSettings.Year;
+                    var qualificationClassificationDto = await _serviceManager.QualificationClassificationService.Create(sectorTime);
+                    if (qualificationClassificationDto == null)
                     {
-                        _logger.LogWarning($"Exist sector time for:{sectorTime.Postion}||| {sectorTime.Driver}. {sectorTime.Circuite}     {_importSettings.Year}");
+                        _logger.LogWarning($"Exist sector time for:{sectorTime.Position}||| {sectorTime.Driver}. {sectorTime.Circuite}     {_importSettings.Year}");
                     }
                     else
                     {
                         _logger.LogInformation("Created new sector time!!!");
-                    }*/
+                    }
                 }
             }
             _logger.LogInformation("Import ended!!!");

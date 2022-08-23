@@ -12,6 +12,5 @@ namespace FormulaCar.Championships.Contracts
         public string DriverName { get; set; }
         public string ConstructorName { get; set; }
         public string Season { get; set; }
-        
     }
 }

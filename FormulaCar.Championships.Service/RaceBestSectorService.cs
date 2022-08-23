@@ -1,5 +1,4 @@
-﻿using System.Threading.Channels;
-using AutoMapper;
+﻿using AutoMapper;
 using FormulaCar.Championships.Contracts;
 using FormulaCar.Championships.Domain.Entities;
 using FormulaCar.Championships.Domain.Exceptions;
@@ -65,7 +64,7 @@ public class RaceBestSectorService : IRaceBestSectorService
             await GetDetails(raceSectorsItem.Driver, raceSectorsItem.Circuite, raceSectorsItem.Season.ToString(),
                 raceSectorsItem.Postion, raceSectorsItem.Sector);
 
-        if (items.Item5 == null || items.Item3 == null || items.Item6 == null || items.Item7==null) return null;
+        if (items.Item5 == null || items.Item3 == null || items.Item6 == null || items.Item7 == null) return null;
 
         var newRaceSectorResult = new RaceSectorTime
         {
@@ -77,7 +76,7 @@ public class RaceBestSectorService : IRaceBestSectorService
         };
 
         _repositoryManager.BestSectorsRepository.Insert(newRaceSectorResult);
-        var changes= await _repositoryManager.UnitOfWork.SaveChangesAsync();
+        var changes = await _repositoryManager.UnitOfWork.SaveChangesAsync();
         Console.WriteLine(changes);
         return _mapper.Map<RaceBestSectorTimesDto>(newRaceSectorResult);
     }
@@ -89,7 +88,8 @@ public class RaceBestSectorService : IRaceBestSectorService
 
         if (items.Item5 == null || items.Item3 == null || items.Item6 == null || items.Item7 == null) return false;
 
-        return (await _repositoryManager.BestSectorsRepository.FindByCondition(x=>x.BookingId==items.Item3.Id&&x.RaceweekId==items.Item6.Id&&x.SectorId==items.Item7.Id)).Any();
+        return (await _repositoryManager.BestSectorsRepository.FindByCondition(x =>
+            x.BookingId == items.Item3.Id && x.RaceweekId == items.Item6.Id && x.SectorId == items.Item7.Id)).Any();
     }
 
 
@@ -100,7 +100,8 @@ public class RaceBestSectorService : IRaceBestSectorService
         var selectedPosition =
             (await _repositoryManager.PositionRepository.FindByCondition(x => x.Rank == position)).FirstOrDefault();
         var selectedDriver =
-            (await _repositoryManager.DriverRepository.FindByCondition(x => x.LastName.ToLower() == driver.ToLower() && x.IsActive))
+            (await _repositoryManager.DriverRepository.FindByCondition(x =>
+                x.LastName.ToLower() == driver.ToLower() && x.IsActive))
             .FirstOrDefault();
 
         var selectedSeason =

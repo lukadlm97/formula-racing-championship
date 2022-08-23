@@ -16,5 +16,9 @@ public interface IServiceManager
     IRaceSpeedTrapService RaceSpeedTrapService { get; }
     IRacePitStopService RacePitStopService { get; }
     IRaceBestSectorService RaceBestSectorService { get; }
-    IRaceMaximumSpeedService RaceMaximumSpeedService { get; }
+    IRaceMaximumSpeedService RaceMaximumSpeedService { get; } 
+    IQualificationBestSectorService QualificationBestSectorService { get; }
+    IQualificationClassificationService QualificationClassificationService { get; }
+    IQualificationMaxSpeedService QualificationMaxSpeedService { get; }
+    IQualificationSpeedTrapService QualificationSpeedTrapService { get; }
 }

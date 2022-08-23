@@ -1,4 +1,5 @@
-﻿using FormulaCar.Championships.Domain.Repositories;
+﻿using FormulaCar.Championships.Domain.Entities;
+using FormulaCar.Championships.Domain.Repositories;
 
 namespace FormulaCar.Championships.Persistence.Repositories;
 
@@ -50,6 +51,8 @@ public class RepositoryManager : IRepositoryManager
         _lazySectorRepository = new Lazy<ISectorRepository>(() => new SectorsRepository(repositoryDbContext));
         _lazyRaceBestSectorsRepository = new Lazy<IRaceBestSectorsRepository>(() => new RaceBestSectorRepository(repositoryDbContext));
         _lazyRaceMaximumSpeedsRepository = new Lazy<IRaceMaximumSpeedsRepository>(() => new RaceMaximumSpeedsRepository(repositoryDbContext));
+        _lazyQualificationPeriodsRepository =
+            new Lazy<IQualificationPeriodsRepository>(() => new QualificationPeriodRepository(repositoryDbContext));
         _lazyQualificationBestSectorTimesRepository = new Lazy<IQualificationBestSectorTimesRepository>(() => new QualificationBestSectorTimesRepository(repositoryDbContext));
         _lazyQualificationClassificationRepository = new Lazy<IQualificationClassificationRepository>(() => new QualificationClassificationRepository(repositoryDbContext));
         _lazyQualificationMaximumSpeedRepository = new Lazy<IQualificationMaximumSpeedRepository>(() => new QualificationMaximumSpeedRepository(repositoryDbContext));

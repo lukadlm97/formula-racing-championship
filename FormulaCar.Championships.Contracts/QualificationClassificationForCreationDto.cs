@@ -12,6 +12,7 @@ namespace FormulaCar.Championships.Contracts
         public string Constructor { get; set; }
         public string Circuite { get; set; }
         public string Position { get; set; }
+        public string Season { get; set; }
         public TimeSpan Time { get; set; }
         public int Laps { get; set; }
         public string QualificationPeriod { get; set; }

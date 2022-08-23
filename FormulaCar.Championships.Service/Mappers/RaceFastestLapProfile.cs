@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using FormulaCar.Championships.Contracts;
 using FormulaCar.Championships.Domain.Entities;
 
-namespace FormulaCar.Championships.Service.Mappers
+namespace FormulaCar.Championships.Service.Mappers;
+
+public class RaceFastestLapProfile : Profile
 {
-    public class RaceFastestLapProfile:Profile
+    public RaceFastestLapProfile()
     {
-        public RaceFastestLapProfile()
-        {
-            CreateMap<RaceFastesLap, RaceFastestLapDto>();
-        }
+        CreateMap<RaceFastesLap, RaceFastestLapDto>();
     }
 }
