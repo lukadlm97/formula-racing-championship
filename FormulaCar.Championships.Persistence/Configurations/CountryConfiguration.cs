@@ -21,6 +21,9 @@ public class CountryConfiguration : IEntityTypeConfiguration<Country>
             .HasForeignKey(constructor => constructor.CountryId);
         builder.HasMany(country => country.Circuites)
             .WithOne()
-            .HasForeignKey(circuite => circuite.CountryId);
+            .HasForeignKey(circuite => circuite.CountryId);  
+        builder.HasMany(country => country.Engines)
+            .WithOne()
+            .HasForeignKey(engine => engine.CountryId);
     }
 }

@@ -1,0 +1,64 @@
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP (1000) 
+rs1.Id,
+	  ss.Year
+	  ,cr.Name
+	  ,p.Rank
+	  ,d.FirstName
+	  ,d.LastName
+	  ,cs.Name 
+	  ,rc.Laps as 'Race Lap Completed'
+	  ,rc.Time as 'Race Total Time'
+	  ,rst.MaxSpeed as 'Race Max Speed'
+	  ,rps.Count as 'Race Pit Stop'
+	  ,rps.TotalTime as 'Race Time in Pit'
+	  ,rfl.AvgSpeed as 'Race Avg Speed'
+	  ,rfl.LapTime as 'Race Best Lap Time'
+	  ,rfl.Lap as 'Race Best Lap No'
+	  ,MIN(rs5.PositionId) as 'Q Rank'
+	  ,MIN(qc.Time) as 'Q Best Time'
+	  ,SUM(qc.Laps) as 'Q Total Laps'
+	  ,qst.MaxSpeed as 'Q Max Speed'
+  FROM [formula-racing].[dbo].[Raceweeks] rw
+  join Circuites  cr on cr.Id=rw.CircuiteId
+  join Seasons ss on ss.Id=rw.SeasonId
+  join Result rs1 on rs1.RaceweekId=rw.Id
+  join Positions p on rs1.PositionId=p.Id
+  join Bookings b on rs1.BookingId=b.Id
+  join Drivers d on b.DriverId=d.Id
+  join Constructors cs on cs.Id=b.ConstructorId
+  join RaceClassifications rc on rs1.Id=rc.Id
+  join Result rs2 on rs2.RaceweekId=rw.Id
+  join RaceSpeedTraps rst on rst.Id=rs2.Id
+  join Result rs3 on rs3.RaceweekId=rw.Id
+  join RacePitStops rps on rps.Id=rs3.Id
+  join Result rs4 on rs4.RaceweekId=rw.Id
+  join RaceFastesLaps rfl on rs4.Id=rfl.Id
+  join Result rs5 on rs5.RaceweekId=rw.Id
+  join QualificationClassifications qc on rs5.Id=qc.Id
+  join QualificationPeriods qp on qc.QualificationPeriodId=qp.Id
+  join Result rs6 on rs6.RaceweekId=rw.Id
+  join QualificationSpeedTraps qst on qst.Id=rs6.Id
+  where rs1.RaceweekId=rs2.RaceweekId and rs1.BookingId=rs2.BookingId
+  and rs3.RaceweekId=rs1.RaceweekId and rs3.BookingId=rs1.BookingId
+  and rs4.RaceweekId=rs1.RaceweekId and rs4.BookingId=rs1.BookingId
+  and rs5.RaceweekId=rs1.RaceweekId and rs5.BookingId=rs1.BookingId
+  and rs6.RaceweekId=rs1.RaceweekId and rs6.BookingId=rs1.BookingId
+  group by 
+rs1.Id,
+	  ss.Year
+	  ,cr.Name
+	  ,cr.Name
+	  ,p.Rank
+	  ,d.FirstName
+	  ,d.LastName
+	  ,cs.Name 
+	  ,rc.Laps
+	  ,rc.Time
+	  ,rst.MaxSpeed
+	  ,rps.Count
+	  ,rps.TotalTime
+	  ,rfl.AvgSpeed
+	  ,rfl.LapTime
+	  ,rfl.Lap
+	  ,qst.MaxSpeed

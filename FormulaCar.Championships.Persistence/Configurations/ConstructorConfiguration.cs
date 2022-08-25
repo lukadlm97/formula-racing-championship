@@ -15,5 +15,6 @@ public class ConstructorConfiguration : IEntityTypeConfiguration<Constructor>
         builder.HasOne(constructor => constructor.MediaTag);
         builder.HasMany(constructor => constructor.Bookings).WithOne()
             .HasForeignKey(constructor => constructor.ConstructorId);
+        builder.HasOne(constructor => constructor.Engine);
     }
 }

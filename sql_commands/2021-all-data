@@ -1,0 +1,65 @@
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP (1000) 
+	  ss.Year as 'Season'
+	  ,cr.Name as 'Circuite'
+	  ,ct1.Name as 'Circuite Country'
+	  ,cr.Length  as 'Circute Lenght [km]'
+	  ,cr.Turns  as 'Circute Turns'
+	  ,cr.DrsZone  as 'Circute Drs Zones'
+	  ,rw.OrderNumber as 'Calendar Order'
+	  ,d.FirstName+' '+d.LastName as 'Driver Name'
+	  ,ct.Name as 'Driver Country'
+	  ,cs.Name as 'Constructor'
+	  ,ct2.Name as 'Constructor Country'
+	  ,e.Manufacturer as 'Engine Manufacturer'
+	  ,ct3.Name as 'Engine Country'
+	  ,p.Rank as 'R Rank'
+	  ,rc.Laps as 'R Total Laps'
+	  ,rc.Time as 'R Total Time'
+	  ,rc.Laps*cr.Length as 'R Distance [km]'
+	  ,p2.Rank as 'Q Rank'
+	  ,Min(qc.Time)  as 'Q Best Time'
+	  ,SUM(qc.Laps) as 'Q Total Laps'
+	  ,SUM(qc.Laps)*cr.Length as 'Q Distance [km]'
+  FROM [formula-racing].[dbo].[Raceweeks] rw
+  join Circuites  cr on cr.Id=rw.CircuiteId
+  join Countries ct1 on ct1.Id=cr.CountryId
+  join Seasons ss on ss.Id=rw.SeasonId
+  join Result rs1 on rs1.RaceweekId=rw.Id
+  join Positions p on rs1.PositionId=p.Id
+  join Bookings b on rs1.BookingId=b.Id
+  join Drivers d on b.DriverId=d.Id
+  join Countries ct on d.CountryId=ct.Id
+  join Constructors cs on cs.Id=b.ConstructorId
+  join Engines e on cs.EngineId=e.Id
+  join Countries ct3 on ct3.Id=e.CountryId
+  join Countries ct2 on ct2.Id=cs.CountryId
+  join RaceClassifications rc on rs1.Id=rc.Id
+  join Result rs2 on rs2.RaceweekId=rw.Id
+  join QualificationClassifications qc on qc.Id=rs2.Id
+  join Positions p2 on p2.Id=rs2.PositionId
+  where rs1.RaceweekId=rs2.RaceweekId and rs1.BookingId=rs2.BookingId 
+  and ss.Year=2022
+  group by 
+rs1.Id,
+b.Id,
+	  ss.Year
+	  ,cr.Name
+	  ,rw.OrderNumber
+	  ,p.Rank
+	  ,d.FirstName
+	  ,d.LastName
+	  ,ct.Name
+	  ,cs.Name 
+	  ,rc.Laps 
+	  ,rc.Time
+	  ,rs1.PositionId
+	  ,p2.Rank
+	  ,ct1.Name
+	  ,ct2.Name,
+	  cr.Length
+	  ,cr.Turns
+	  ,cr.DrsZone
+	  ,e.Manufacturer
+	  ,ct3.Name
+order by rw.OrderNumber,rs1.PositionId

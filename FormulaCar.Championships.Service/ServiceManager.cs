@@ -25,6 +25,7 @@ public class ServiceManager : IServiceManager
     private readonly Lazy<IQualificationSpeedTrapService> _lazyQualificationSpeedTrapService;
     private readonly Lazy<IQualificationClassificationService> _lazyQualificationClassificationService;
     private readonly Lazy<IQualificationBestSectorService> _lazyQualificationBestSectorService;
+    private readonly Lazy<IEngineService> _lazyEngineService;
     private readonly IMapper _mapper;
 
     public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper)
@@ -61,6 +62,8 @@ public class ServiceManager : IServiceManager
             new Lazy<IQualificationBestSectorService>(() => new QualificationBestSectorTimeService(repositoryManager, _mapper));
         _lazyQualificationClassificationService =
             new Lazy<IQualificationClassificationService>(() => new QualificationClassificationService(repositoryManager, _mapper));
+        _lazyEngineService =
+            new Lazy<IEngineService>(() => new EngineService(repositoryManager, _mapper));
 
     }
 
@@ -86,4 +89,5 @@ public class ServiceManager : IServiceManager
 
     public IQualificationMaxSpeedService QualificationMaxSpeedService => _lazyQualificationMaxSpeedService.Value;
     public IQualificationSpeedTrapService QualificationSpeedTrapService => _lazyQualificationSpeedTrapService.Value;
+    public IEngineService EngineService => _lazyEngineService.Value;
 }

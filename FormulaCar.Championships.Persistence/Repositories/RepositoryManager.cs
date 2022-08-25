@@ -26,6 +26,7 @@ public class RepositoryManager : IRepositoryManager
     private readonly Lazy<IQualificationMaximumSpeedRepository> _lazyQualificationMaximumSpeedRepository;
     private readonly Lazy<IQualificationClassificationRepository> _lazyQualificationClassificationRepository;
     private readonly Lazy<IQualificationBestSectorTimesRepository> _lazyQualificationBestSectorTimesRepository;
+    private readonly Lazy<IEngineRepository> _lazyEngineRepository;
     private readonly Lazy<IUnitOfWork> _lazyUnitOfWork;
 
     public RepositoryManager(RepositoryDbContext repositoryDbContext)
@@ -57,6 +58,7 @@ public class RepositoryManager : IRepositoryManager
         _lazyQualificationClassificationRepository = new Lazy<IQualificationClassificationRepository>(() => new QualificationClassificationRepository(repositoryDbContext));
         _lazyQualificationMaximumSpeedRepository = new Lazy<IQualificationMaximumSpeedRepository>(() => new QualificationMaximumSpeedRepository(repositoryDbContext));
         _lazyQualificationSpeedTrapRepository = new Lazy<IQualificationSpeedTrapRepository>(() => new QualificationSpeedTrapRepository(repositoryDbContext));
+        _lazyEngineRepository = new Lazy<IEngineRepository>(() => new EngineRepository(repositoryDbContext));
         _lazyUnitOfWork = new Lazy<IUnitOfWork>(() => new UnitOfWork(repositoryDbContext));
     }
 
@@ -90,5 +92,8 @@ public class RepositoryManager : IRepositoryManager
 
     public IQualificationSpeedTrapRepository QualificationSpeedTrapRepository =>
         _lazyQualificationSpeedTrapRepository.Value;
+
+    public IEngineRepository EngineRepository =>
+        _lazyEngineRepository.Value;
     public IUnitOfWork UnitOfWork => _lazyUnitOfWork.Value;
 }

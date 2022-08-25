@@ -8,6 +8,8 @@ public class Circuite
     public double Length { get; set; }
     public int Capacity { get; set; }
     public MediaTag? MediaTag { get; set; }
+    public int? Turns { get; set; }
+    public int? DrsZone { get; set; }
 
     public int CountryId { get; set; }
 }

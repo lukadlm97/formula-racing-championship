@@ -468,8 +468,6 @@ foreach (var htmlNode in nodes)
     }
 
 }
-*/
-
 
 HttpClient client = new HttpClient();
 
@@ -548,6 +546,88 @@ foreach (var htmlNode in nodes)
     }
 
 }
+*/
+
+//TODO ENGINE imort
+
+
+
+HttpClient client = new HttpClient();
+
+
+var response = await client.GetAsync($"https://en.wikipedia.org/wiki/List_of_Formula_One_engine_manufacturers");
+
+var responseContent = await response.Content.ReadAsStringAsync();
+
+if (response.IsSuccessStatusCode)
+{
+    // Console.WriteLine(responseContent);
+}
+
+HtmlDocument doc = new HtmlDocument();
+doc.LoadHtml(responseContent);
+
+var nodes = doc.DocumentNode.Descendants("table").ToList();
+var manufacturerNode = nodes[1];
+
+var manufacturers = manufacturerNode.Descendants("tr").ToList();
+
+var init = true;
+foreach (var manufacturer in manufacturers)
+{
+    if (init)
+    {
+        init = false;
+        continue;
+    }
+    var columns = manufacturer.Descendants("td").ToArray();
+    if (columns.Length > 0)
+    {
+        var manufacturerName = columns[0].Descendants("a").FirstOrDefault().InnerHtml;
+        var country = columns[1].Descendants("a").FirstOrDefault().InnerHtml;
+
+        Console.WriteLine(manufacturerName + " [" + country + "] ");
+    }
+
+    // Console.WriteLine(constructor.InnerHtml);
+}
+
+
+ nodes = doc.DocumentNode.Descendants("table").ToList();
+ manufacturerNode = nodes[2];
+
+ manufacturers = manufacturerNode.Descendants("tr").ToList();
+
+ init = true;
+foreach (var manufacturer in manufacturers)
+{
+    if (init)
+    {
+        init = false;
+        continue;
+    }
+    var columns = manufacturer.Descendants("td").ToArray();
+    if (columns.Length > 0)
+    {
+        var manufacturerName = columns[0].Descendants("a").FirstOrDefault().InnerHtml;
+        var country = columns[1].Descendants("a").FirstOrDefault().InnerHtml;
+
+        Console.WriteLine(manufacturerName + " [" + country + "] ");
+    }
+   
+
+    // Console.WriteLine(constructor.InnerHtml);
+}
+
+
+
+
+
+
+
+
+
+
 Console.WriteLine("press any key to close...");
 
 Console.ReadLine();

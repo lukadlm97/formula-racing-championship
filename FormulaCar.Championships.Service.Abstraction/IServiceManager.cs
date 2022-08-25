@@ -21,4 +21,5 @@ public interface IServiceManager
     IQualificationClassificationService QualificationClassificationService { get; }
     IQualificationMaxSpeedService QualificationMaxSpeedService { get; }
     IQualificationSpeedTrapService QualificationSpeedTrapService { get; }
+    IEngineService EngineService { get; }
 }

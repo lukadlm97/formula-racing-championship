@@ -25,6 +25,8 @@ public sealed class RepositoryDbContext : DbContext
     public DbSet<RaceMaximumSpeed> RaceMaximumSpeeds { get; set; }
     public DbSet<QualificationPeriod> QualificationPeriods { get; set; }
     public DbSet<QualificationClassification> QualificationClassifications { get; set; }
+    public DbSet<RegulationRule> RegulationRules { get; set; }
+    public DbSet<Engine> Engines { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

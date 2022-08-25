@@ -23,5 +23,6 @@ public interface IRepositoryManager
     IQualificationBestSectorTimesRepository QualificationBestSectorTimesRepository { get; }
     IQualificationMaximumSpeedRepository QualificationMaximumSpeedRepository { get; }
     IQualificationSpeedTrapRepository QualificationSpeedTrapRepository { get; }
+    IEngineRepository EngineRepository { get; }
     IUnitOfWork UnitOfWork { get; }
 }

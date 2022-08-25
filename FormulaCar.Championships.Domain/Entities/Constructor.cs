@@ -7,6 +7,7 @@ public class Constructor
     public DateTime FirstApperance { get; set; }
     public bool IsActive { get; set; }
     public MediaTag? MediaTag { get; set; }
+    public Engine? Engine { get; set; }
 
     public int CountryId { get; set; }
     public ICollection<Booking> Bookings { get; set; }

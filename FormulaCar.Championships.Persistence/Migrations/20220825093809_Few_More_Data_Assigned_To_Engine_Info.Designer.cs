@@ -4,6 +4,7 @@ using FormulaCar.Championships.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FormulaCar.Championships.Persistence.Migrations
 {
     [DbContext(typeof(RepositoryDbContext))]
-    partial class RepositoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220825093809_Few_More_Data_Assigned_To_Engine_Info")]
+    partial class Few_More_Data_Assigned_To_Engine_Info
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -331,23 +333,6 @@ namespace FormulaCar.Championships.Persistence.Migrations
                     b.ToTable("Raceweeks", (string)null);
                 });
 
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.RegulationRule", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RegulationRules", (string)null);
-                });
-
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Result", b =>
                 {
                     b.Property<int>("Id")
@@ -374,55 +359,6 @@ namespace FormulaCar.Championships.Persistence.Migrations
                     b.HasIndex("RaceweekId");
 
                     b.ToTable("Result", (string)null);
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.ScorePointRegulation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("Point")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PositionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RegulationRuleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PositionId");
-
-                    b.HasIndex("RegulationRuleId");
-
-                    b.ToTable("ScorePointRegulations", (string)null);
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.ScoringSystem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("RaceweekId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RegulationRuleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RaceweekId");
-
-                    b.HasIndex("RegulationRuleId");
-
-                    b.ToTable("ScoringSystems", (string)null);
                 });
 
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.Season", b =>
@@ -738,44 +674,6 @@ namespace FormulaCar.Championships.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Position");
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.ScorePointRegulation", b =>
-                {
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Position", "Position")
-                        .WithMany()
-                        .HasForeignKey("PositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.RegulationRule", "RegulationRule")
-                        .WithMany()
-                        .HasForeignKey("RegulationRuleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Position");
-
-                    b.Navigation("RegulationRule");
-                });
-
-            modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.ScoringSystem", b =>
-                {
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.Raceweek", "Raceweek")
-                        .WithMany()
-                        .HasForeignKey("RaceweekId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FormulaCar.Championships.Domain.Entities.RegulationRule", "RegulationRule")
-                        .WithMany()
-                        .HasForeignKey("RegulationRuleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Raceweek");
-
-                    b.Navigation("RegulationRule");
                 });
 
             modelBuilder.Entity("FormulaCar.Championships.Domain.Entities.QualificationBestSectorTimes", b =>
